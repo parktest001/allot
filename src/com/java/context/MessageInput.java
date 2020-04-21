@@ -2,7 +2,9 @@ package com.java.context;
 
 import java.io.Serializable;  
 import javax.xml.bind.annotation.XmlElement; 
-import javax.xml.bind.annotation.XmlRootElement; 
+import javax.xml.bind.annotation.XmlRootElement;
+
+import com.fasterxml.jackson.annotation.JsonSetter; 
 @XmlRootElement(name = "user") 
 
 public class MessageInput implements Serializable {  
@@ -24,28 +26,28 @@ public class MessageInput implements Serializable {
    public long getUserId() { 
       return userId; 
    } 
-   @XmlElement
-   public void setName(long userId) { 
+   @JsonSetter
+   public void setUserId(long userId) { 
       this.userId = userId; 
    } 
    public long getChannelId() { 
       return channelId; 
    } 
-   @XmlElement 
+   @JsonSetter 
    public void setChannelId(long channelId) { 
       this.channelId = channelId; 
    }  
    public long getMessageTime() { 
 	      return messageTime; 
 	   } 
-   @XmlElement 
+   @JsonSetter 
    public void setMessageTime(long messageTime) { 
 	   this.messageTime = messageTime; 
    } 
    public String getMessage() { 
 	      return message; 
 	   } 
-	@XmlElement 
+   @JsonSetter 
 	public void setMessage(String message) { 
 		   this.message = message; 
 	}   
