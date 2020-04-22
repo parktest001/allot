@@ -18,6 +18,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.java.context.IdContext;
 import com.java.context.MessageInput;
 import com.java.context.ParkingLocationDetailsContext;
+import com.java.context.signUpContext;
 import com.java.database.MongoCommands;
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.FindIterable;
@@ -47,6 +48,22 @@ public class ParkingLotService {
 	    			.append("price", context.getPrice());
 
 		   MongoCommands.insertData("ParkingLotDetails", "Parking", document);
+		   return "SUCCESS"; 
+	   }
+	   
+	   @POST
+	   @Path("/setSpaceSignUp")
+	   @Produces(MediaType.TEXT_PLAIN) 
+	   @Consumes({MediaType.APPLICATION_JSON})
+	   public static String setParkingLotDetailSignUp(signUpContext context)
+	   {
+		   Document document = new Document("parkingLotName", context.getParkingLotName())
+				   .append("lattitude", context.getLattitude())
+				   .append("longitude", context.getLongitude())
+				   .append("carCapacity", context.getCarCapacity())
+				   .append("bikeCapacity", context.getBikeCapacity());
+
+		   MongoCommands.insertData("ParkingLotDetailSignUp", "Parking", document);
 		   return "SUCCESS"; 
 	   }
 	   
