@@ -50,6 +50,13 @@ public class ParkingLotService {
 		   MongoCommands.insertData("ParkingLotDetails", "Parking", document);
 		   return "SUCCESS"; 
 	   }
+	   @POST
+	   @Path("/getSpaceSignup")
+	   @Produces(MediaType.APPLICATION_JSON) 
+	   @Consumes({MediaType.APPLICATION_JSON})
+	   public FindIterable<Document> getParkingLotDetailsSignUp(){ 
+	      return getParkingLotDetailSignUp(); 
+	   } 
 	   
 	   @POST
 	   @Path("/setSpaceSignup")
@@ -78,5 +85,11 @@ public class ParkingLotService {
 			inQuery.put("parkingLotId", new BasicDBObject("$in", list));
 			FindIterable<Document> docs= MongoCommands.retrieveDataWithCondition("ParkingLotDetails", "Parking", inQuery);
 		    return docs; 
+	   }
+	   public static FindIterable<Document> getParkingLotDetailSignUp()
+	   {
+		FindIterable<Document> docs= MongoCommands.retrieveAllData("ParkingLotDetails", "Parking");
+		return docs;
+		   
 	   }
 }
