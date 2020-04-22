@@ -21,7 +21,6 @@ public class signUpContext implements Serializable{
 	      this.bikeCapacity = bikeCapacity;
 	   }  
 	   public signUpContext() {}
-	   @JsonSetter
 	   public String getParkingLotName() { 
 	      return parkingLotName; 
 	   } 
@@ -29,7 +28,6 @@ public class signUpContext implements Serializable{
 	   public void setParkingLotName(String parkingLotName) { 
 	      this.parkingLotName = parkingLotName; 
 	   } 
-	   @JsonSetter
 	   public double getLattitude() { 
 	      return lattitude; 
 	   } 
@@ -37,7 +35,6 @@ public class signUpContext implements Serializable{
 	   public void setLattitude(double lattitude) { 
 	      this.lattitude = lattitude; 
 	   } 
-	   @JsonSetter
 	   public double getLongitude() { 
 	      return longitude; 
 	   } 
@@ -45,7 +42,6 @@ public class signUpContext implements Serializable{
 	   public void setLongitude(double longitude) { 
 	      this.longitude = longitude; 
 	   }
-	   @JsonSetter
 	   public long getCarCapacity() { 
 	      return carCapacity; 
 	   } 
@@ -53,7 +49,6 @@ public class signUpContext implements Serializable{
 	   public void setCarCapacity(long carCapacity) { 
 	      this.carCapacity = carCapacity; 
 	   }
-	   @JsonSetter
 	   public long getBikeCapacity() { 
 	      return bikeCapacity; 
 	   } 
