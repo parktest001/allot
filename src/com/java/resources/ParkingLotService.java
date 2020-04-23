@@ -52,7 +52,7 @@ public class ParkingLotService {
 	   }
 	   @POST
 	   @Path("/getSpaceSignup")
-	   @Produces(MediaType.APPLICATION_JSON) 
+	   @Produces(MediaType.APPLICATION_JSON)
 	   @Consumes({MediaType.APPLICATION_JSON})
 	   public FindIterable<Document> getParkingLotDetailsSignUp(){ 
 	      return getParkingLotDetailSignUp(); 
