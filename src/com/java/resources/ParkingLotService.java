@@ -76,7 +76,7 @@ public class ParkingLotService {
 	   
 	   public static FindIterable<Document> getParkingLotDetail(List<IdContext> context)
 	   {
-			List<Integer> list = new ArrayList<Integer>();
+			List<Integer> list = new ArrayList<Integer>(); 
 		   	for(IdContext idobj:context)
 		   	{
 		   		list.add((int) idobj.getId());
