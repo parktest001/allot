@@ -69,7 +69,7 @@ public class MarkersOnViewService {
 							        HashMap<String,Object> jo = new HashMap<>(); 
 							        jo.put("parkingName",t.getString("parkingLotName"));
 							        jo.put("address", u.getString("address"));
-							        jo.put("rating", u.getInteger("rating"));
+							        jo.put("rating", u.getDouble("rating"));
 							        jo.put("price", u.getInteger("price"));
 							        jo.put("lattitude", t.getDouble("lattitude"));
 							        jo.put("longitude", t.getDouble("longitude"));
