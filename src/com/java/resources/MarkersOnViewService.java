@@ -22,6 +22,7 @@ import com.mongodb.Block;
 import com.mongodb.DBObject;
 import com.mongodb.client.FindIterable;
 
+
 @Path("/MarkersOnViewService")
 public class MarkersOnViewService {
 	
