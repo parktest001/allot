@@ -11,7 +11,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import org.bson.Document;
-import org.codehaus.jettison.json.JSONObject;
 
 import com.java.context.ViewPortContext;
 import com.java.database.MongoCommands;
@@ -23,7 +22,6 @@ import com.mongodb.client.FindIterable;
 @Path("/MarkersOnViewService")
 public class MarkersOnViewService {
 	
-	@SuppressWarnings("deprecation")
 	@POST
 	   @Path("/getMarkers")
 	   @Produces(MediaType.APPLICATION_JSON) 
