@@ -54,15 +54,15 @@ public class MarkersOnViewService {
 			inQuery.put("parkingName", new BasicDBObject("$in", parkingName));
 			FindIterable<Document> docsSpace= MongoCommands.retrieveDataWithCondition("ParkingLotDetails", "Parking", inQuery);
 
-			docs.forEach(new Block<Document>() {
+			docsSpace.forEach(new Block<Document>() {
 
 				@Override
-				public void apply(Document t) {
+				public void apply(Document u) {
 
-					docsSpace.forEach(new Block<Document>() {
+					docs.forEach(new Block<Document>() {
 
 						@Override
-						public void apply(Document u) {
+						public void apply(Document t) {
 							if(t.getString("parkingLotName").equals(u.getString("parkingName")))
 							{
 								try {
