@@ -12,7 +12,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import org.bson.Document;
-import org.codehaus.jettison.json.JSONObject;
+import org.json.JSONObject;
 
 import com.java.context.ViewPortContext;
 import com.java.database.MongoCommands;
@@ -35,7 +35,6 @@ public class MarkersOnViewService {
 			ArrayList<DBObject> criteria = new ArrayList<DBObject>();
 			BasicDBObject inQuery = new BasicDBObject();
 	        ArrayList<HashMap<String,Object>> ja = new ArrayList<>(); 
-		    JSONObject obj = new JSONObject();
 			criteria.add(new BasicDBObject("lattitude", new BasicDBObject("$gt", context.getLeft_Down_Lattitude())));
 			criteria.add(new BasicDBObject("longitude", new BasicDBObject("$gt", context.getLeft_Down_Longitude())));
 			criteria.add(new BasicDBObject("lattitude", new BasicDBObject("$lt", context.getRight_Top_Lattitude())));
