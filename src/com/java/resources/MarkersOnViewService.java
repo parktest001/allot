@@ -76,7 +76,7 @@ public class MarkersOnViewService {
 							        jo.put("carCapacity", t.get("carCapacity"));
 							        jo.put("bikeCapacity", t.get("bikeCapacity"));
 							        ja.add(jo);
-							  
+							   
 								}catch (Exception e) {
 									System.out.println(e);
 								}
