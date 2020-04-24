@@ -69,12 +69,12 @@ public class MarkersOnViewService {
 							        HashMap<String,Object> jo = new HashMap<>(); 
 							        jo.put("parkingName",t.getString("parkingLotName"));
 							        jo.put("address", u.getString("address"));
-							        jo.put("rating", u.getDouble("rating"));
-							        jo.put("price", u.getInteger("price"));
-							        jo.put("lattitude", t.getDouble("lattitude"));
-							        jo.put("longitude", t.getDouble("longitude"));
-							        jo.put("carCapacity", t.getLong("carCapacity"));
-							        jo.put("bikeCapacity", t.getLong("bikeCapacity"));
+							        jo.put("rating", u.get("rating"));
+							        jo.put("price", u.get("price"));
+							        jo.put("lattitude", t.get("lattitude"));
+							        jo.put("longitude", t.get("longitude"));
+							        jo.put("carCapacity", t.get("carCapacity"));
+							        jo.put("bikeCapacity", t.get("bikeCapacity"));
 							        ja.add(jo);
 							  
 								}catch (Exception e) {
