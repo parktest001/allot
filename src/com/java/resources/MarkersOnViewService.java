@@ -37,10 +37,10 @@ public class MarkersOnViewService {
 	        ArrayList<HashMap<String,Object>> ja = new ArrayList<>(); 
 	        Double latitude=context.getLattitude();
 	        Double longitude=context.getLongitude();
-			criteria.add(new BasicDBObject("lattitude", new BasicDBObject("$gt", latitude - 0.01)));
-			criteria.add(new BasicDBObject("longitude", new BasicDBObject("$gt", longitude - 0.01)));
-			criteria.add(new BasicDBObject("lattitude", new BasicDBObject("$lt", latitude + 0.01)));
-			criteria.add(new BasicDBObject("longitude", new BasicDBObject("$lt", longitude + 0.01)));
+			criteria.add(new BasicDBObject("lattitude", new BasicDBObject("$gt", latitude - 0.04)));
+			criteria.add(new BasicDBObject("longitude", new BasicDBObject("$gt", longitude - 0.04)));
+			criteria.add(new BasicDBObject("lattitude", new BasicDBObject("$lt", latitude + 0.04)));
+			criteria.add(new BasicDBObject("longitude", new BasicDBObject("$lt", longitude + 0.04)));
 			if(context.getVehicle() == 1)
 			{
 				criteria.add(new BasicDBObject("bikeCapacity", new BasicDBObject("$gt", 0)));
