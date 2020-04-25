@@ -41,6 +41,14 @@ public class MarkersOnViewService {
 			criteria.add(new BasicDBObject("longitude", new BasicDBObject("$gt", longitude - 0.01)));
 			criteria.add(new BasicDBObject("lattitude", new BasicDBObject("$lt", latitude + 0.01)));
 			criteria.add(new BasicDBObject("longitude", new BasicDBObject("$lt", longitude + 0.01)));
+			if(context.getVehicle() == 1)
+			{
+				criteria.add(new BasicDBObject("bikeCapacity", new BasicDBObject("$gt", 0)));
+			}
+			else if(context.getVehicle() == 2)
+			{
+				criteria.add(new BasicDBObject("carCapacity", new BasicDBObject("$gt", 0)));
+			}
 			FindIterable<Document> docs= MongoCommands.retrieveDataWithCondition("ParkingLotDetailSignUp", "Parking", new BasicDBObject("$and", criteria));
 			
 			docs.forEach(new Block<Document>() {

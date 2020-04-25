@@ -7,6 +7,7 @@ public class ViewPortContext implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private double lattitude;
 	private double longitude;
+	private int vehicle;
 
 
 	public ViewPortContext(double lattitude, double longitude) {
@@ -33,5 +34,11 @@ public class ViewPortContext implements Serializable{
 	public void setLongitude(double longitude) {
 		this.longitude = longitude;
 	}
-
+	public int getVehicle() {
+		return vehicle;
+	}
+	@JsonSetter
+	public void setVehicle(int vehicle) {
+		this.vehicle = vehicle;
+	}
 }
