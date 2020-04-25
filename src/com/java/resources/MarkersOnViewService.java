@@ -35,10 +35,12 @@ public class MarkersOnViewService {
 			ArrayList<DBObject> criteria = new ArrayList<DBObject>();
 			BasicDBObject inQuery = new BasicDBObject();
 	        ArrayList<HashMap<String,Object>> ja = new ArrayList<>(); 
-			criteria.add(new BasicDBObject("lattitude", new BasicDBObject("$gt", context.getLeft_Down_Lattitude())));
-			criteria.add(new BasicDBObject("longitude", new BasicDBObject("$gt", context.getLeft_Down_Longitude())));
-			criteria.add(new BasicDBObject("lattitude", new BasicDBObject("$lt", context.getRight_Top_Lattitude())));
-			criteria.add(new BasicDBObject("longitude", new BasicDBObject("$lt", context.getRight_Top_Longitude())));
+	        Double latitude=context.getLattitude();
+	        Double longitude=context.getLongitude();
+			criteria.add(new BasicDBObject("lattitude", new BasicDBObject("$gt", latitude - 0.01)));
+			criteria.add(new BasicDBObject("longitude", new BasicDBObject("$gt", longitude - 0.01)));
+			criteria.add(new BasicDBObject("lattitude", new BasicDBObject("$lt", latitude + 0.01)));
+			criteria.add(new BasicDBObject("longitude", new BasicDBObject("$lt", longitude + 0.01)));
 			FindIterable<Document> docs= MongoCommands.retrieveDataWithCondition("ParkingLotDetailSignUp", "Parking", new BasicDBObject("$and", criteria));
 			
 			docs.forEach(new Block<Document>() {
