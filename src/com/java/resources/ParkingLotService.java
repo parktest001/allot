@@ -37,7 +37,7 @@ public class ParkingLotService {
 	   
 	   @POST
 	   @Path("/setSpace")
-	   @Produces(MediaType.TEXT_PLAIN) 
+	   @Produces(MediaType.TEXT_PLAIN)
 	   @Consumes({MediaType.APPLICATION_JSON})
 	   public static String setParkingLotDetail(ParkingLocationDetailsContext context)
 	   {
