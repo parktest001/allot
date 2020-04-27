@@ -80,7 +80,7 @@ public class ConfirmationContext implements Serializable{
 	   public void setState(boolean state) { 
 	      this.state = state;
 	   }
-	   
+}
 
 
 
