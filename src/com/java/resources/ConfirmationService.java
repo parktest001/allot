@@ -27,7 +27,7 @@ public class ConfirmationService {
 	   {
 	   	long currentTime = System.currentTimeMillis()/1000;
 
-		   Document document = new Document("sessionKey",context.getUserMobileNumber() + currentTime + "")
+		   Document document = new Document("sessionKey",String.valueOf(context.getUserMobileNumber()) + String.valueOf(currentTime) )
 	    			.append("location", context.getLocation())
 	    			.append("requestedTime", context.getRequestedTime())
 	    			.append("expectedTime", context.getExpectedTime())
