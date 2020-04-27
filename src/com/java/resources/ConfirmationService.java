@@ -15,8 +15,10 @@ import org.bson.Document;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
+import com.java.context.ConfirmationContext;
 import com.java.context.IdContext;
 import com.java.context.MessageInput;
+import com.java.context.MobileContext;
 import com.java.context.ParkingLocationDetailsContext;
 import com.java.database.MongoCommands;
 import com.mongodb.BasicDBObject;
@@ -57,7 +59,7 @@ public class ConfirmationService {
 
 		   Document document = new Document("sessionKey",context.getUserMobileNumber());
 			
-			BasicDBObject criteria=BasicDBObject("UserMobileNumber", new BasicDBObject("$eq",context.getUserMobileNumber() ));
+			BasicDBObject criteria=new BasicDBObject("UserMobileNumber", new BasicDBObject("$eq",context.getUserMobileNumber() ));
 			
 			FindIterable<Document> docs= MongoCommands.retrieveDataWithCondition("Confirmation", "Parking", criteria);
 		   //MongoCommands.insertData("Confirmation", "Parking", document);
