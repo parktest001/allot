@@ -14,7 +14,7 @@ import com.java.database.MongoCommands;
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.FindIterable;
 
-@Path("/ParkingService") 
+@Path("/ParkingServiceConfirmation") 
 public class ConfirmationService {
 	
    
@@ -38,7 +38,6 @@ public class ConfirmationService {
 		   MongoCommands.insertData("Confirmation", "Parking", document);
 		   return "SUCCESS"; 
 	   }
-
 	   @POST
 	   @Path("/getConfirmation")
 	   @Produces(MediaType.APPLICATION_JSON)
