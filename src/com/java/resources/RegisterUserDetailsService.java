@@ -30,7 +30,7 @@ public class RegisterUserDetailsService {
 		BasicDBObject query = new BasicDBObject();
 		query.put("mobile", new BasicDBObject("$eq", context.getMobile()));
 		FindIterable<Document> doc = MongoCommands.retrieveDataWithCondition("User", "UserDetails", query);
-		if(doc == null) {
+		if(doc.first() == null) {
 			return "Success";
 		}
 		return "Failed";
