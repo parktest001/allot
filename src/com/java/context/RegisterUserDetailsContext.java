@@ -9,11 +9,13 @@ public class RegisterUserDetailsContext implements Serializable{
 	private String userName;
 	private String passWord;
 	private long mobile;
+	private String userId;
 
-	public RegisterUserDetailsContext(String userName, String passWord, long number){
+	public RegisterUserDetailsContext(String userName, String passWord, long mobile,String userId){
 		this.userName = userName;
 		this.passWord = passWord;
 		this.mobile = mobile;
+		this.userId = userId;
 	}
 	
 	public RegisterUserDetailsContext() {}
@@ -39,5 +41,11 @@ public class RegisterUserDetailsContext implements Serializable{
 	public void setMobile(long mobile){
 		this.mobile = mobile;
 	}
-
+	public String getUserId(){
+		return userId;
+	}
+	@JsonSetter
+	public void setUserId(String userId){
+		this.userId = userId;
+	}
 }

@@ -1,5 +1,7 @@
 package com.java.resources;
 
+import java.util.Base64;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -41,9 +43,14 @@ public class RegisterUserDetailsService {
 	@Produces(MediaType.TEXT_PLAIN) 
 	@Consumes({MediaType.APPLICATION_JSON})
 	public static String registerUser(RegisterUserDetailsContext context){
+		String mobNum=String.valueOf(context.getMobile());
+		String userIdGenerated 
+        = Base64.getEncoder() 
+              .encodeToString(mobNum.getBytes()); 
 		Document document = new Document("userName", context.getUserName())
 				   .append("passWord", context.getPassWord())
-				   .append("mobile", context.getMobile());
+				   .append("mobile", context.getMobile())
+				   .append("userId", userIdGenerated);
 		
 		MongoCommands.insertData("User", "UserDetails", document);
 		return "Success";
