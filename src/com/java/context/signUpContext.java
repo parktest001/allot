@@ -11,14 +11,15 @@ public class signUpContext implements Serializable{
 	   private double longitude;
 	   private long carCapacity;
 	   private long bikeCapacity;
-
+	   private List<String> features = new ArrayList<String>();
 	    
-	   public signUpContext(String parkingLotName, double lattitude, double longitude, long carCapacity, long bikeCapacity){  
+	   public signUpContext(String parkingLotName, double lattitude, double longitude, long carCapacity, long bikeCapacity, ArrayList<String> features){  
 	      this.parkingLotName = parkingLotName;
 	      this.lattitude = lattitude;
 	      this.longitude = longitude;
 	      this.carCapacity = carCapacity;
 	      this.bikeCapacity = bikeCapacity;
+	      this.features = features;
 	   }  
 	   public signUpContext() {}
 	   public String getParkingLotName() { 
@@ -56,6 +57,14 @@ public class signUpContext implements Serializable{
 	   public void setBikeCapacity(long bikeCapacity) { 
 	      this.bikeCapacity = bikeCapacity; 
 	   }
+
+	   public ArrayList<String> getFeatures() {
+	   		return features;
+	   }
+	   @JsonSetter
+	   public void setFeatures(ArrayList<String> features) {
+	   		this.features = features;
+	   }
 	   
-}
+}		
 

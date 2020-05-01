@@ -50,6 +50,9 @@ public class ParkingLotService {
 		   MongoCommands.insertData("ParkingLotDetails", "Parking", document);
 		   return "SUCCESS"; 
 	   }
+
+
+
 	   @POST
 	   @Path("/getSpaceSignup")
 	   @Produces(MediaType.APPLICATION_JSON)
@@ -68,9 +71,12 @@ public class ParkingLotService {
 				   .append("lattitude", context.getLattitude())
 				   .append("longitude", context.getLongitude())
 				   .append("carCapacity", context.getCarCapacity())
-				   .append("bikeCapacity", context.getBikeCapacity());
+				   .append("bikeCapacity", context.getBikeCapacity())
+				   .append("features", context.getFeatures());
 
 		   MongoCommands.insertData("ParkingLotDetailSignUp", "Parking", document);
+		   LiveContext livecontext=new LiveContext(context.getParkingName(),context.getCarCapacity(),context.getBikeCapacity())
+		   setLiveVehicleCount(livecontext);
 		   return "SUCCESS"; 
 	   }
 	   
@@ -92,4 +98,13 @@ public class ParkingLotService {
 		return docs;
 		   
 	   }
+	    public static void setLiveVehicleCount(LiveContext context)
+	   {
+		   Document document = new Document("parkingLotName", context.getParkingLotName())
+				   .append("liveCarCount", context.getLiveCarCount())
+				   .append("liveBikeCount", context.getLiveBikeCount());
+
+		   MongoCommands.insertData("VehicleCount", "Parking", document);
+	   }
+
 }
