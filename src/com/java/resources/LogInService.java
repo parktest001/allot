@@ -8,6 +8,7 @@ import javax.ws.rs.core.MediaType;
 
 import org.bson.Document;
 
+import com.java.context.RegisterUserDetailsContext;
 import com.java.context.UserLogInContext;
 import com.java.database.MongoCommands;
 import com.mongodb.BasicDBObject;
@@ -29,9 +30,19 @@ public class LogInService {
 		}
 		else if(doc.first().get("passWord").equals(context.getpassWord()))
 		{
-			return "Success";
+			return doc.first().getString("userId");
 		}
 		return "Failed";
 	}
 
+	@POST
+	@Path("/getLogInDetailes")
+	@Produces(MediaType.APPLICATION_JSON) 
+	@Consumes({MediaType.APPLICATION_JSON})
+	public static Document get(RegisterUserDetailsContext context){
+		BasicDBObject query = new BasicDBObject();
+		query.put("userId", new BasicDBObject("$eq", context.getUserId()));
+		FindIterable<Document> doc = MongoCommands.retrieveDataWithCondition("User", "UserDetails", query);
+		return doc.first();
+	}
 }
