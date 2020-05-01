@@ -7,11 +7,11 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 public class LiveContext implements Serializable{
 	private static final long serialVersionUID = 1L;
 	   private String parkingLotName;
-	   private int liveCarCount;
-	   private int liveBikeCount;
+	   private long liveCarCount;
+	   private long liveBikeCount;
 	   
 	    
-	   public LiveContext(String parkingLotName, int liveCarCount, int liveBikeCount){  
+	   public LiveContext(String parkingLotName, long liveCarCount, long liveBikeCount){  
 	      this.parkingLotName = parkingLotName;
 	      this.liveCarCount = liveCarCount;
 	      this.liveBikeCount = liveBikeCount;
@@ -26,19 +26,19 @@ public class LiveContext implements Serializable{
 	      this.parkingLotName = parkingLotName; 
 	   } 
 
-	   public int getLiveCarCount() {
+	   public long getLiveCarCount() {
 	   	return liveCarCount;
 	   }
 	   @JsonSetter
-	   public void setLiveCarCount(int liveCarCount) {
+	   public void setLiveCarCount(long liveCarCount) {
 	   	this.liveCarCount = liveCarCount;
 	   }
 
-	   public int getLiveBikeCount() {
+	   public long getLiveBikeCount() {
 	   	return liveBikeCount;
 	   }
 	   @JsonSetter
-	   public void setLiveBikeCount(int liveBikeCount) {
+	   public void setLiveBikeCount(long liveBikeCount) {
 	   	this.liveBikeCount = liveBikeCount;
 	   }
 }

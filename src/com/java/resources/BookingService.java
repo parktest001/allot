@@ -16,24 +16,25 @@ import org.bson.Document;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.java.context.IdContext;
+import com.java.context.LiveBookingContext;
 import com.java.context.MessageInput;
 import com.java.context.ParkingLocationDetailsContext;
 import com.java.context.signUpContext;
 import com.java.database.MongoCommands;
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.FindIterable;
-@Path("/ParkingService") 
+@Path("/ParkingServiceNew") 
 public class BookingService {
 
-	@POST
-	   @Path("/setConfirmVehicle") 
-	   @Produces(MediaType.TEXT_PLAIN) 
-	   @Consumes({MediaType.APPLICATION_JSON})
-	   public static String setBookingVehicle(LiveBookingContext context)
-	   {
-		   
-	   		
-		   MongoCommands.insertData("VehicleCount", "Parking", document);
-		   return "SUCCESS"; 
-	   }
+//	@POST
+//	   @Path("/setConfirmVehicle") 
+//	   @Produces(MediaType.TEXT_PLAIN) 
+//	   @Consumes({MediaType.APPLICATION_JSON})
+//	   public static String setBookingVehicle(LiveBookingContext context)
+//	   {
+//		   
+//	   		
+//		   MongoCommands.insertData("VehicleCount", "Parking", document);
+//		   return "SUCCESS"; 
+//	   }
 }

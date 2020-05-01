@@ -1,6 +1,8 @@
 package com.java.context;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonSetter;
 
@@ -11,9 +13,9 @@ public class signUpContext implements Serializable{
 	   private double longitude;
 	   private long carCapacity;
 	   private long bikeCapacity;
-	   private List<String> features = new ArrayList<String>();
+	   private List<String> features;
 	    
-	   public signUpContext(String parkingLotName, double lattitude, double longitude, long carCapacity, long bikeCapacity, ArrayList<String> features){  
+	   public signUpContext(String parkingLotName, double lattitude, double longitude, long carCapacity, long bikeCapacity, List<String> features){  
 	      this.parkingLotName = parkingLotName;
 	      this.lattitude = lattitude;
 	      this.longitude = longitude;
@@ -58,11 +60,11 @@ public class signUpContext implements Serializable{
 	      this.bikeCapacity = bikeCapacity; 
 	   }
 
-	   public ArrayList<String> getFeatures() {
+	   public List<String> getFeatures() {
 	   		return features;
 	   }
 	   @JsonSetter
-	   public void setFeatures(ArrayList<String> features) {
+	   public void setFeatures(List<String> features) {
 	   		this.features = features;
 	   }
 	   

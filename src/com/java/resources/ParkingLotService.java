@@ -16,6 +16,7 @@ import org.bson.Document;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.java.context.IdContext;
+import com.java.context.LiveContext;
 import com.java.context.MessageInput;
 import com.java.context.ParkingLocationDetailsContext;
 import com.java.context.signUpContext;
@@ -75,8 +76,10 @@ public class ParkingLotService {
 				   .append("features", context.getFeatures());
 
 		   MongoCommands.insertData("ParkingLotDetailSignUp", "Parking", document);
-		   LiveContext livecontext=new LiveContext(context.getParkingName(),context.getCarCapacity(),context.getBikeCapacity())
+		   
+		   LiveContext livecontext=new LiveContext(context.getParkingLotName(),context.getCarCapacity(),context.getBikeCapacity());
 		   setLiveVehicleCount(livecontext);
+		   
 		   return "SUCCESS"; 
 	   }
 	   

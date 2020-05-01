@@ -22,38 +22,20 @@ import com.java.context.signUpContext;
 import com.java.database.MongoCommands;
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.FindIterable;
-@Path("/ParkingService") 
+@Path("/ParkingFeatures") 
 public class FeaturesService {
-	Message userDao = new Message(); 
+	//Message userDao = new Message(); 
 
 	@POST
-	   @Path("/setFeatures") 
+	   @Path("/getFeatures") 
 	   @Produces(MediaType.APPLICATION_JSON) 
 	   @Consumes({MediaType.APPLICATION_JSON})
-	   public static String setFeaturesSignUp(signUpContext context)
+	   public static List<String> getFeaturesSignUp(signUpContext context)
 	   {
-		   Document document = new Document("features", context.getFeatures());
-
-		   MongoCommands.insertData("ParkingLotDetailSignUp", "Parking", document);
-		   return "SUCCESS"; 
-	   }
-	   
-	   public static ArrayList<String> getFeaturesSignUp(ArrayList<String> context)
-	   {
-			List<Integer> features = new ArrayList<Integer>(); 
-		   	for(IdContext idobj:context)
-		   	{
-		   		features.add((int) idobj.getFeatures());
-		   	}
 			BasicDBObject inQuery = new BasicDBObject();	
-			inQuery.put("features", new BasicDBObject("$in", features));
-			FindIterable<Document> docs= MongoCommands.retrieveDataWithCondition("ParkingLotDetails", "Parking", inQuery);
-		    return docs; 
+			inQuery.put("parkingLotName", new BasicDBObject("$eq", context.getParkingLotName()));
+			FindIterable<Document> docs= MongoCommands.retrieveDataWithCondition("ParkingLotDetailSignUp", "Parking", inQuery);
+		    return (List<String>) docs.first().get("features"); 
 	   }
-	   public static ArrayList<String> getParkingLotDetailSignUp()
-	   {
-		ArrayList<String> docs= MongoCommands.retrieveDataWithCondition("ParkingLotDetails","Parking",inQuery)
-		return docs;
-		   
-	   }
+
 }

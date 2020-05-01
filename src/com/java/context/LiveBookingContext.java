@@ -4,17 +4,17 @@ import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonSetter;
 
-public class VehicleContext implements Serializable{
+public class LiveBookingContext implements Serializable{
 	private static final long serialVersionUID = 1L;
 	   private boolean car;
 	   private boolean bike;	   
 	    
-	   public VehicleContext(boolean car, boolean bike){  
+	   public LiveBookingContext(boolean car, boolean bike){  
 	      this.car = car;
 	      this.bike = bike;
 	      
 	   }  
-	   public VehicleContext() {}
+	   public LiveBookingContext() {}
 	   public boolean getCar() { 
 	      return car; 
 	   } 
@@ -27,7 +27,7 @@ public class VehicleContext implements Serializable{
 	   	return bike;
 	   }
 	   @JsonSetter
-	   public void setBike() {
+	   public void setBike(boolean bike) {
 	   	this.bike = bike;
 	   }
 }
