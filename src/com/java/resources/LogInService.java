@@ -38,24 +38,24 @@ public class LogInService {
 	@Produces(MediaType.TEXT_PLAIN) 
 	@Consumes({MediaType.APPLICATION_JSON})
 	public static String verifyMobile(UserLogInContext context){
-//		Filter doc;
-//				doc.eq("userName","KAMALAKANNAN");
-		Bson filter = eq("userName","kamal");
-		Bson doc = set("userName","KAMALAKANNAN");
+
+//		Bson filter = eq("userName","kamal");
+//		Bson doc = set("userName","KAMALAKANNAN");
+//		MongoCommands.updateData("User", "UserDetails", filter, filter);
 //		filter =
 //		filter.eq("userName", "kamal")
 		
-		MongoCommands.updateData("User", "UserDetails", filter, filter);
-//		BasicDBObject query = new BasicDBObject();
-//		query.put("userName", new BasicDBObject("$eq", context.getUserName()));
-//		FindIterable<Document> doc = MongoCommands.retrieveDataWithCondition("User", "UserDetails", query);
-//		if(doc.first() == null) {
-//			return "NoUser";
-//		}
-//		else if(doc.first().get("passWord").equals(context.getpassWord()))
-//		{
-//			return doc.first().getString("userId");
-//		}
+		
+		BasicDBObject query = new BasicDBObject();
+		query.put("userName", new BasicDBObject("$eq", context.getUserName()));
+		FindIterable<Document> doc = MongoCommands.retrieveDataWithCondition("User", "UserDetails", query);
+		if(doc.first() == null) {
+			return "NoUser";
+		}
+		else if(doc.first().get("passWord").equals(context.getpassWord()))
+		{
+			return doc.first().getString("userId");
+		}
 		return "Failed";
 	}
 
