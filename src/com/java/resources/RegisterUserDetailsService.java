@@ -37,6 +37,19 @@ public class RegisterUserDetailsService {
 		}
 		return "Failed";
 	}
+	@POST
+	@Path("/verifyUserName")
+	@Produces(MediaType.TEXT_PLAIN) 
+	@Consumes({MediaType.APPLICATION_JSON})
+	public static String verifyUserName(RegisterUserDetailsContext context){
+		BasicDBObject query = new BasicDBObject();
+		query.put("userName", new BasicDBObject("$eq", context.getUserName()));
+		FindIterable<Document> doc = MongoCommands.retrieveDataWithCondition("User", "UserDetails", query);
+		if(doc.first() == null) {
+			return "Success";
+		}
+		return "Failed";
+	}
 	
 	@POST
 	@Path("/registerUser")
