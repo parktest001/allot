@@ -2,6 +2,7 @@ package com.java.resources;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -16,7 +17,6 @@ import org.bson.Document;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.java.context.IdContext;
-import com.java.context.LiveContext;
 import com.java.context.MessageInput;
 import com.java.context.ParkingLocationDetailsContext;
 import com.java.context.signUpContext;
@@ -46,8 +46,10 @@ public class ParkingLotService {
 	    			.append("parkingName", context.getParkingName())
 	    			.append("address", context.getAddress())
 	    			.append("rating", context.getRating())
-	    			.append("price", context.getPrice());
-
+	    			.append("price", context.getPrice())
+	    			.append("liveCarCount", context.getLiveCarCount())
+	    			.append("liveBikeCount", context.getLiveBikeCount());
+		   
 		   MongoCommands.insertData("ParkingLotDetails", "Parking", document);
 		   return "SUCCESS"; 
 	   }
@@ -69,17 +71,20 @@ public class ParkingLotService {
 	   public static String setParkingLotDetailSignUp(signUpContext context)
 	   {
 		   Document document = new Document("parkingLotName", context.getParkingLotName())
+				   .append("address", context.getAddress())
 				   .append("lattitude", context.getLattitude())
 				   .append("longitude", context.getLongitude())
 				   .append("carCapacity", context.getCarCapacity())
 				   .append("bikeCapacity", context.getBikeCapacity())
-				   .append("features", context.getFeatures());
+				   .append("features", context.getFeatures())
+				   .append("price", context.getPrice());
 
 		   MongoCommands.insertData("ParkingLotDetailSignUp", "Parking", document);
-		   
-		   LiveContext livecontext=new LiveContext(context.getParkingLotName(),context.getCarCapacity(),context.getBikeCapacity());
-		   setLiveVehicleCount(livecontext);
-		   
+		   String parkingIdGenerated = Base64.getEncoder() 
+	              .encodeToString(context.getParkingLotName().getBytes()); 
+		   //(long parkingLotId, String parkingName,String address,float rating,long price,long liveCarCount,long liveBikeCount)
+		   ParkingLocationDetailsContext parkingLocationDetailsContext=new ParkingLocationDetailsContext(parkingIdGenerated,context.getParkingLotName(),context.getAddress(),3,context.getPrice(),context.getCarCapacity(),context.getBikeCapacity());
+		   setParkingLotDetail(parkingLocationDetailsContext);		   
 		   return "SUCCESS"; 
 	   }
 	   
@@ -100,14 +105,6 @@ public class ParkingLotService {
 		FindIterable<Document> docs= MongoCommands.retrieveAllData("ParkingLotDetails", "Parking");
 		return docs;
 		   
-	   }
-	    public static void setLiveVehicleCount(LiveContext context)
-	   {
-		   Document document = new Document("parkingLotName", context.getParkingLotName())
-				   .append("liveCarCount", context.getLiveCarCount())
-				   .append("liveBikeCount", context.getLiveBikeCount());
-
-		   MongoCommands.insertData("VehicleCount", "Parking", document);
 	   }
 
 }

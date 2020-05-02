@@ -6,27 +6,32 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 
 public class ParkingLocationDetailsContext implements Serializable{
 	private static final long serialVersionUID = 1L; 
-	   private long parkingLotId; 
+	   private String parkingLotId; 
 	   private String parkingName;
 	   private String address;
 	   private float rating = -1;
 	   private long price;
+	   private long liveCarCount;
+	   private long liveBikeCount;
+	   
 
 	    
-	   public ParkingLocationDetailsContext(long parkingLotId, String parkingName,String address,float rating,long price){  
+	   public ParkingLocationDetailsContext(String parkingLotId, String parkingName,String address,float rating,long price,long liveCarCount,long liveBikeCount){  
 	      this.parkingLotId = parkingLotId; 
 	      this.parkingName = parkingName; 
 	      this.address = address;
 	      this.rating = rating;
 	      this.price = price;
+	      this.liveCarCount = liveCarCount;
+	      this.liveBikeCount = liveBikeCount;
 
 	   }  
 	   public ParkingLocationDetailsContext() {}
-	   public long getParkingLotId() { 
+	   public String getParkingLotId() { 
 	      return parkingLotId; 
 	   } 
 	   @JsonSetter
-	   public void setParkingLotId(long parkingLotId) { 
+	   public void setParkingLotId(String parkingLotId) { 
 	      this.parkingLotId = parkingLotId; 
 	   } 
 	   public String getParkingName() { 
@@ -57,4 +62,19 @@ public class ParkingLocationDetailsContext implements Serializable{
 		public void setPrice(long price) { 
 			   this.price = price; 
 		}   
+	   public long getLiveCarCount() {
+		   	return liveCarCount;
+		   }
+		   @JsonSetter
+		   public void setLiveCarCount(long liveCarCount) {
+		   	this.liveCarCount = liveCarCount;
+		   }
+
+		   public long getLiveBikeCount() {
+		   	return liveBikeCount;
+		   }
+		   @JsonSetter
+		   public void setLiveBikeCount(long liveBikeCount) {
+		   	this.liveBikeCount = liveBikeCount;
+		   }
 }

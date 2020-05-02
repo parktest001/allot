@@ -18,26 +18,26 @@ import com.mongodb.client.FindIterable;
 public class ConfirmationService {
 	
    
-	   
-	   @POST
+	 @POST
 	   @Path("/setConfirmation")
 	   @Produces(MediaType.TEXT_PLAIN)
 	   @Consumes({MediaType.APPLICATION_JSON})
-	   public static String setConfirmationDetail(ConfirmationContext context)
+	   public static String verifySlotAvailability(ConfirmationContext context)
 	   {
 	   	long currentTime = System.currentTimeMillis()/1000;
 
 		   Document document = new Document("sessionKey",String.valueOf(context.getUserMobileNumber()) + String.valueOf(currentTime) )
-	    			.append("location", context.getLocation())
+	    			.append("parkingLotName", context.getParkingLotName())
 	    			.append("requestedTime", context.getRequestedTime())
-	    			.append("expectedTime", context.getExpectedTime())
-	    			.append("uniqueKey", context.getSessionKey()+context.getLocation())
+	    			.append("expectedTime", context.getRequestedTime()+900)
+	    			.append("uniqueKey", String.valueOf(context.getUserMobileNumber()) + String.valueOf(currentTime)+context.getParkingLotName())
 	    			.append("userMobileNumber", context.getUserMobileNumber())
 	    			.append("state", context.getState());
 
 		   MongoCommands.insertData("Confirmation", "Parking", document);
 		   return "SUCCESS"; 
 	   }
+	   
 	   @POST
 	   @Path("/getConfirmation")
 	   @Produces(MediaType.APPLICATION_JSON)

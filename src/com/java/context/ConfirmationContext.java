@@ -7,18 +7,16 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 public class ConfirmationContext implements Serializable{
 	private static final long serialVersionUID = 1L; 
 	   private String sessionKey; 
-	   private String location;
+	   private String parkingLotName;
 	   private long requestedTime;
-	   private long expectedTime;
 	   private String uniqueKey;
 	   private long userMobileNumber;
 	   private boolean state;
 
-	   public ConfirmationContext(String sessionKey, String location, long requestedTime, long expectedTime, String uniqueKey, long userMobileNumber, boolean state){  
+	   public ConfirmationContext(String sessionKey, String parkingLotName, long requestedTime, String uniqueKey, long userMobileNumber, boolean state){  
 	      this.sessionKey = sessionKey;
-	      this.location = location;
+	      this.parkingLotName = parkingLotName;
 	      this.requestedTime = requestedTime;
-	      this.expectedTime = expectedTime;
 	      this.uniqueKey = uniqueKey;
 	      this.userMobileNumber = userMobileNumber;
 	      this.state = state;
@@ -33,12 +31,12 @@ public class ConfirmationContext implements Serializable{
 	      this.sessionKey = sessionKey;
 	   } 
 
-	   public String getLocation() {
-	   	  return location;
+	   public String getParkingLotName() {
+	   	  return parkingLotName;
 	   }
 	   @JsonSetter
-	   public void setLocation(String location) {
-	   		this.location = location;
+	   public void setParkingLotName(String parkingLotName) {
+	   		this.parkingLotName = parkingLotName;
 	   }
 
 	   public long getRequestedTime() {
@@ -48,15 +46,6 @@ public class ConfirmationContext implements Serializable{
 	   public void setRequestedTime(long requestedTime) {
 	   		this.requestedTime = requestedTime;
 	   }
-
-	   public long getExpectedTime() {
-	   		return expectedTime;
-	   }
-	   @JsonSetter
-	   public void setExpectedTime(long expectedTime) {
-	   		this.expectedTime = expectedTime;
-	   }
-
 	   public String getUniqueKey() { 
 	      return uniqueKey; 
 	   } 

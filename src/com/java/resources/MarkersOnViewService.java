@@ -33,6 +33,7 @@ public class MarkersOnViewService {
 	   {
 			ArrayList<String> parkingName= new ArrayList<>();
 			ArrayList<DBObject> criteria = new ArrayList<DBObject>();
+			ArrayList<DBObject> criteria1 = new ArrayList<DBObject>();
 			BasicDBObject inQuery = new BasicDBObject();
 	        ArrayList<HashMap<String,Object>> ja = new ArrayList<>(); 
 	        Double latitude=context.getLattitude();
@@ -43,11 +44,11 @@ public class MarkersOnViewService {
 			criteria.add(new BasicDBObject("longitude", new BasicDBObject("$lt", longitude + 0.04)));
 			if(context.getVehicle() == 1)
 			{
-				criteria.add(new BasicDBObject("bikeCapacity", new BasicDBObject("$gt", 0)));
+				criteria1.add(new BasicDBObject("liveCarCount", new BasicDBObject("$gt", 0)));
 			}
 			else if(context.getVehicle() == 2)
 			{
-				criteria.add(new BasicDBObject("carCapacity", new BasicDBObject("$gt", 0)));
+				criteria1.add(new BasicDBObject("liveBikeCount", new BasicDBObject("$gt", 0)));
 			}
 			FindIterable<Document> docs= MongoCommands.retrieveDataWithCondition("ParkingLotDetailSignUp", "Parking", new BasicDBObject("$and", criteria));
 			
@@ -60,7 +61,8 @@ public class MarkersOnViewService {
 			
 			});
 			inQuery.put("parkingName", new BasicDBObject("$in", parkingName));
-			FindIterable<Document> docsSpace= MongoCommands.retrieveDataWithCondition("ParkingLotDetails", "Parking", inQuery);
+			criteria1.add(inQuery);
+			FindIterable<Document> docsSpace= MongoCommands.retrieveDataWithCondition("ParkingLotDetails", "Parking",  new BasicDBObject("$and", criteria1));
 
 			docs.forEach(new Block<Document>() {
 
