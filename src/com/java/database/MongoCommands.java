@@ -1,6 +1,5 @@
 package com.java.database;
 
-import org.apache.catalina.Pipeline;
 import org.bson.BSON;
 import org.bson.Document;
 import org.bson.conversions.Bson;
@@ -14,9 +13,6 @@ import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MongoCommands {
 	public static MongoClientURI uri = new MongoClientURI("mongodb://channel:stream@cluster0-shard-00-00-gbif3.mongodb.net:27017,cluster0-shard-00-01-gbif3.mongodb.net:27017,cluster0-shard-00-02-gbif3.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority");
@@ -58,20 +54,10 @@ public class MongoCommands {
 	  	collection.updateOne(query, document);
 		
 	}
-//	public void constructData(String collectionName,String databaseName)
-//	{
-//		MongoDatabase database = mongo.getDatabase(databaseName); 
-//		 MongoCollection<Document> collection = database.getCollection(collectionName); 
-//			List<Bson> pipeline = new ArrayList<Bson>();
-//			Bson filter = eq("userName","kamal");
-//			Bson filter1 = eq();
-//			pipeline.add(filter);
-//			pipeline.add(filter1);
-//			collection.
-//		 AggregateIterable<Document> ss = collection.aggregate(pipeline);
-//		 System.out.println(ss);
-//		
-//	}
+	public void constructData()
+	{
+		
+	}
 	public static FindIterable<Document> retrieveAllData(String collectionName,String databaseName)
 	{
 		MongoDatabase database = mongo.getDatabase(databaseName); 
