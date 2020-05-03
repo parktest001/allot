@@ -86,11 +86,11 @@ public class ImageService {
 	      JSONObject json = new JSONObject(obj.get("image"));
 	      byteStream = (byte[])obj.get("image");
 		System.out.println(obj);
-            FileOutputStream fout = new FileOutputStream("/Users/kamal/Desktop/img.png");
-            fout.write(byteStream);
-            fout.flush();
+//            FileOutputStream fout = new FileOutputStream("/Users/kamal/Desktop/img.png");
+//            fout.write(byteStream);
+//            fout.flush();
             System.out.println("Photo of  retrieved and stored at ");
-            fout.close();
+//            fout.close();
 		return byteStream;
 	}
 	
