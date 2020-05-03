@@ -4,7 +4,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Base64;
+import java.util.List;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
@@ -22,6 +24,7 @@ import com.java.database.MongoServerConnection;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
+import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
@@ -37,15 +40,17 @@ public class ImageService {
 	@Produces(MediaType.TEXT_PLAIN)
 	@Consumes({MediaType.APPLICATION_JSON})
 	public String insertImageService(ImageContext context) throws IOException{
-		File imageFile = new File("/Users/kamal/Desktop/Current_Marker.png");
-        FileInputStream fs = new FileInputStream(imageFile);
-
-        byte byteStream[] = new byte[fs.available()];
-        fs.read(byteStream);
+		byte byteStream[] = Base64.getDecoder().decode(context.getImageBase64());
+//		File imageFile = new File("/Users/kamal/Desktop/park2.jpg");
+//        FileInputStream fs = new FileInputStream(imageFile);
+//
+//        byte byteStream[] = new byte[fs.available()];
+//        fs.read(byteStream);
 
         Binary data = new Binary(byteStream);
         BasicDBObject obj = new BasicDBObject();
-        obj.append("fileName","IMAGE1").append("image",data);
+        obj.append("parkingName",context.getParkingName())
+           .append("image",data);
         
         
         MongoClientURI uri = new MongoClientURI("mongodb://channel:stream@cluster0-shard-00-00-gbif3.mongodb.net:27017,cluster0-shard-00-01-gbif3.mongodb.net:27017,cluster0-shard-00-02-gbif3.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority");
@@ -55,7 +60,7 @@ public class ImageService {
         collection.insert(obj);
         System.out.println("Inserted record.");
 
-        fs.close();
+//        fs.close();
 
 //        String source = "/Users/kamal/Desktop/Current_Marker.png";
 //        String newFileName = "my-image1";
@@ -75,26 +80,35 @@ public class ImageService {
 	
 	@POST
 	@Path("/getImage")
-	@Produces(MediaType.TEXT_PLAIN)
+	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes({MediaType.APPLICATION_JSON})
-	public String retrieveImageService(ImageContext context) throws IOException{
+	public List<String> retrieveImageService(ImageContext context) throws IOException{
 		byte byteStream[];
+		String encoded;
+		List<String> imageList;
+		List<String> imageList1 = new ArrayList<String>();
+
         MongoClientURI uri = new MongoClientURI("mongodb://channel:stream@cluster0-shard-00-00-gbif3.mongodb.net:27017,cluster0-shard-00-01-gbif3.mongodb.net:27017,cluster0-shard-00-02-gbif3.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority");
 		MongoClient mongo = new MongoClient(uri);
 		DB database = mongo.getDB("Images");
 		 DBCollection collection = database.getCollection("New");
-		DBObject obj = collection.findOne(new BasicDBObject("fileName", "IMAGE1"));
-	      JSONObject json = new JSONObject(obj.get("image"));
-	      byteStream = (byte[])obj.get("image");
-	      String encoded = Base64.getEncoder().encodeToString(byteStream);
-		System.out.println(encoded);
+		DBCursor obj = collection.find(new BasicDBObject("parkingName", context.getParkingName()));
+		if(obj.hasNext())
+		{
+			byteStream = (byte[])obj.next().get("image");
+		    encoded = Base64.getEncoder().encodeToString(byteStream);
+		    imageList1.add(encoded);
+		    System.out.print(encoded);
+		}
+	      
 
 //            FileOutputStream fout = new FileOutputStream("/Users/kamal/Desktop/img.png");
 //            fout.write(byteStream);
 //            fout.flush();
             System.out.println("Photo of  retrieved and stored at ");
 //            fout.close();
-		return encoded;
+            imageList = imageList1;
+		return imageList;
 	}
 	
 	
