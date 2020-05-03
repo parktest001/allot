@@ -93,7 +93,7 @@ public class ImageService {
 		DB database = mongo.getDB("Images");
 		 DBCollection collection = database.getCollection("New");
 		DBCursor obj = collection.find(new BasicDBObject("parkingName", context.getParkingName()));
-		if(obj.hasNext())
+		while(obj.hasNext())
 		{
 			byteStream = (byte[])obj.next().get("image");
 		    encoded = Base64.getEncoder().encodeToString(byteStream);
@@ -108,6 +108,7 @@ public class ImageService {
             System.out.println("Photo of  retrieved and stored at ");
 //            fout.close();
             imageList = imageList1;
+            System.out.print(imageList.size());
 		return imageList;
 	}
 	
