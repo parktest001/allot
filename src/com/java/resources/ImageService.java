@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Base64;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
@@ -76,7 +77,7 @@ public class ImageService {
 	@Path("/getImage")
 	@Produces(MediaType.TEXT_PLAIN)
 	@Consumes({MediaType.APPLICATION_JSON})
-	public byte[] retrieveImageService(ImageContext context) throws IOException{
+	public String retrieveImageService(ImageContext context) throws IOException{
 		byte byteStream[];
         MongoClientURI uri = new MongoClientURI("mongodb://channel:stream@cluster0-shard-00-00-gbif3.mongodb.net:27017,cluster0-shard-00-01-gbif3.mongodb.net:27017,cluster0-shard-00-02-gbif3.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority");
 		MongoClient mongo = new MongoClient(uri);
@@ -85,13 +86,15 @@ public class ImageService {
 		DBObject obj = collection.findOne(new BasicDBObject("fileName", "IMAGE1"));
 	      JSONObject json = new JSONObject(obj.get("image"));
 	      byteStream = (byte[])obj.get("image");
-		System.out.println(obj);
+	      String encoded = Base64.getEncoder().encodeToString(byteStream);
+		System.out.println(encoded);
+
 //            FileOutputStream fout = new FileOutputStream("/Users/kamal/Desktop/img.png");
 //            fout.write(byteStream);
 //            fout.flush();
             System.out.println("Photo of  retrieved and stored at ");
 //            fout.close();
-		return byteStream;
+		return encoded;
 	}
 	
 	
