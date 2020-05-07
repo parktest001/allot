@@ -42,13 +42,26 @@ public class MarkersOnViewService {
 			criteria.add(new BasicDBObject("longitude", new BasicDBObject("$gt", longitude - 0.04)));
 			criteria.add(new BasicDBObject("lattitude", new BasicDBObject("$lt", latitude + 0.04)));
 			criteria.add(new BasicDBObject("longitude", new BasicDBObject("$lt", longitude + 0.04)));
-			if(context.getVehicle() == 1)
+			if(context.getParkingOption() == true) {
+			if(context.getVehicle() == 1 )
 			{
 				criteria1.add(new BasicDBObject("liveCarCount", new BasicDBObject("$gt", 0)));
 			}
 			else if(context.getVehicle() == 2)
 			{
 				criteria1.add(new BasicDBObject("liveBikeCount", new BasicDBObject("$gt", 0)));
+			}
+			}
+			else
+			{
+				if(context.getVehicle() == 1 )
+				{
+					criteria.add(new BasicDBObject("carCapacity", new BasicDBObject("$gt", 0)));
+				}
+				else if(context.getVehicle() == 2)
+				{
+					criteria.add(new BasicDBObject("bikeCapacity", new BasicDBObject("$gt", 0)));
+				}
 			}
 			FindIterable<Document> docs= MongoCommands.retrieveDataWithCondition("ParkingLotDetailSignUp", "Parking", new BasicDBObject("$and", criteria));
 			

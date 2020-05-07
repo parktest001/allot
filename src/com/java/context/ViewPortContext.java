@@ -8,11 +8,14 @@ public class ViewPortContext implements Serializable{
 	private double lattitude;
 	private double longitude;
 	private int vehicle;
+	private boolean parkingOption;
 
 
-	public ViewPortContext(double lattitude, double longitude) {
+	public ViewPortContext(double lattitude, double longitude,int vehicle,boolean parkingOption) {
 		this.lattitude = lattitude;
 		this.longitude = longitude;
+		this.vehicle = vehicle;
+		this.parkingOption = parkingOption;
 	}
 	
 	public ViewPortContext() {}
@@ -41,4 +44,13 @@ public class ViewPortContext implements Serializable{
 	public void setVehicle(int vehicle) {
 		this.vehicle = vehicle;
 	}
+
+	public boolean getParkingOption() {
+		return parkingOption;
+	}
+
+	public void setParkingOption(boolean parkingOption) {
+		this.parkingOption = parkingOption;
+	}
+	
 }

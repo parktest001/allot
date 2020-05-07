@@ -88,9 +88,9 @@ public class ImageService {
 		List<String> imageList;
 		List<String> imageList1 = new ArrayList<String>();
 
-        MongoClientURI uri = new MongoClientURI("mongodb://channel:stream@cluster0-shard-00-00-gbif3.mongodb.net:27017,cluster0-shard-00-01-gbif3.mongodb.net:27017,cluster0-shard-00-02-gbif3.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority");
-		MongoClient mongo = new MongoClient(uri);
-		DB database = mongo.getDB("Images");
+//        MongoClientURI uri = new MongoClientURI("mongodb://channel:stream@cluster0-shard-00-00-gbif3.mongodb.net:27017,cluster0-shard-00-01-gbif3.mongodb.net:27017,cluster0-shard-00-02-gbif3.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority");
+//		MongoClient mongo = new MongoClient(uri);
+		DB database = MongoServerConnection.mongo.getDB("Images");
 		 DBCollection collection = database.getCollection("New");
 		DBCursor obj = collection.find(new BasicDBObject("parkingName", context.getParkingName()));
 		while(obj.hasNext())

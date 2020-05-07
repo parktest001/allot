@@ -12,12 +12,12 @@ public class signUpContext implements Serializable{
 	   private String address;
 	   private double lattitude;
 	   private double longitude;
-	   private long carCapacity;
-	   private long bikeCapacity;
+	   private int carCapacity;
+	   private int bikeCapacity;
 	   private List<String> features;
 	   private long price;
 	    
-	   public signUpContext(String parkingLotName, String address,double lattitude, double longitude, long carCapacity, long bikeCapacity, List<String> features,long price){  
+	   public signUpContext(String parkingLotName, String address,double lattitude, double longitude, int carCapacity, int bikeCapacity, List<String> features,long price){  
 	      this.parkingLotName = parkingLotName;
 	      this.address = address;
 	      this.lattitude = lattitude;
@@ -56,18 +56,18 @@ public class signUpContext implements Serializable{
 	   public void setLongitude(double longitude) { 
 	      this.longitude = longitude; 
 	   }
-	   public long getCarCapacity() { 
+	   public int getCarCapacity() { 
 	      return carCapacity; 
 	   } 
 	   @JsonSetter
-	   public void setCarCapacity(long carCapacity) { 
+	   public void setCarCapacity(int carCapacity) { 
 	      this.carCapacity = carCapacity; 
 	   }
-	   public long getBikeCapacity() { 
+	   public int getBikeCapacity() { 
 	      return bikeCapacity; 
 	   } 
 	   @JsonSetter
-	   public void setBikeCapacity(long bikeCapacity) { 
+	   public void setBikeCapacity(int bikeCapacity) { 
 	      this.bikeCapacity = bikeCapacity; 
 	   }
 

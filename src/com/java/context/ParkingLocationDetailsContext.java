@@ -11,12 +11,12 @@ public class ParkingLocationDetailsContext implements Serializable{
 	   private String address;
 	   private float rating = -1;
 	   private long price;
-	   private long liveCarCount;
-	   private long liveBikeCount;
+	   private int liveCarCount;
+	   private int liveBikeCount;
 	   
 
 	    
-	   public ParkingLocationDetailsContext(String parkingLotId, String parkingName,String address,float rating,long price,long liveCarCount,long liveBikeCount){  
+	   public ParkingLocationDetailsContext(String parkingLotId, String parkingName,String address,float rating,long price,int liveCarCount,int liveBikeCount){  
 	      this.parkingLotId = parkingLotId; 
 	      this.parkingName = parkingName; 
 	      this.address = address;
@@ -62,19 +62,19 @@ public class ParkingLocationDetailsContext implements Serializable{
 		public void setPrice(long price) { 
 			   this.price = price; 
 		}   
-	   public long getLiveCarCount() {
+	   public int getLiveCarCount() {
 		   	return liveCarCount;
 		   }
 		   @JsonSetter
-		   public void setLiveCarCount(long liveCarCount) {
+		   public void setLiveCarCount(int liveCarCount) {
 		   	this.liveCarCount = liveCarCount;
 		   }
 
-		   public long getLiveBikeCount() {
+		   public int getLiveBikeCount() {
 		   	return liveBikeCount;
 		   }
 		   @JsonSetter
-		   public void setLiveBikeCount(long liveBikeCount) {
+		   public void setLiveBikeCount(int liveBikeCount) {
 		   	this.liveBikeCount = liveBikeCount;
 		   }
 }
