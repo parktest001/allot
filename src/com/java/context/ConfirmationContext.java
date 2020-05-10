@@ -14,10 +14,14 @@ public class ConfirmationContext implements Serializable{
 	   private long userMobileNumber;
 	   private boolean state;
 	   private boolean isConfirmed;
+	   private boolean isParked;
+	   private boolean isFinished;
+	   private boolean isCancelled;
 	   private int vehicleType;
+	   private long price;
+	   private long finishTime;
 
-
-	   public ConfirmationContext(String sessionKey, String parkingLotName, long requestedTime, long tTime,String uniqueKey, long userMobileNumber, boolean state,boolean isConfirmed,int vehicleType){  
+	   public ConfirmationContext(String sessionKey, String parkingLotName, long requestedTime, long tTime,String uniqueKey, long userMobileNumber, boolean state,boolean isConfirmed,int vehicleType,boolean isParked,boolean isFinished,long price,long finishTime,boolean isCancelled){  
 	      this.sessionKey = sessionKey;
 	      this.parkingLotName = parkingLotName;
 	      this.requestedTime = requestedTime;
@@ -27,9 +31,49 @@ public class ConfirmationContext implements Serializable{
 	      this.state = state;
 	      this.isConfirmed = isConfirmed;
 	      this.vehicleType = vehicleType;
+	      this.isParked =isParked;
+	      this.isFinished = isFinished;
+	      this.price = price;
+	      this.finishTime = finishTime;
+	      this.isCancelled = isCancelled;
 
 	   }  
-	   public ConfirmationContext() {}
+	   public boolean getIsCancelled() {
+		return isCancelled;
+	}
+	   @JsonSetter
+	public void setIsCancelled(boolean isCancelled) {
+		this.isCancelled = isCancelled;
+	}
+	public long getPrice() {
+		return price;
+	}
+	   @JsonSetter
+	public void setPrice(long price) {
+		this.price = price;
+	}
+	public long getFinishTime() {
+		return finishTime;
+	}
+	@JsonSetter
+	public void setFinishTime(long finishTime) {
+		this.finishTime = finishTime;
+	}
+	public boolean isParked() {
+		return isParked;
+	}
+	@JsonSetter
+	public void setParked(boolean isParked) {
+		this.isParked = isParked;
+	}
+	public boolean getIsFinished() {
+		return isFinished;
+	}
+	@JsonSetter
+	public void setIsFinished(boolean isFinished) {
+		this.isFinished = isFinished;
+	}
+	public ConfirmationContext() {}
 	   public String getSessionKey() { 
 	      return sessionKey; 
 	   } 

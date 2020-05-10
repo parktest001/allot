@@ -66,6 +66,11 @@ public class RegisterUserDetailsService {
 				   .append("userId", userIdGenerated);
 		
 		MongoCommands.insertData("User", "UserDetails", document);
+		
+		Document documentToken = new Document("mobile", context.getMobile())
+				   .append("token", "");
+		
+		MongoCommands.insertData("Token", "UserDetails", documentToken);
 		return "Success";
 	}
 }

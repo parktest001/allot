@@ -19,6 +19,7 @@ import com.java.context.ConfirmationContext;
 import com.java.context.MobileContext;
 import com.java.database.MongoCommands;
 import com.java.scheduler.CustomTask;
+import com.java.scheduler.ExpiryCheck;
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.FindIterable;
 
@@ -42,7 +43,10 @@ public class ConfirmationService {
 	   	    			.append("userMobileNumber", context.getUserMobileNumber())
 	   	    			.append("state", context.getState())
 	   		   			.append("isConfirmed", context.getIsConfirmed())
-	   	    			.append("vehicleType", context.getVehicleType());
+	   	    			.append("vehicleType", context.getVehicleType())
+	   	    			.append("isParked", false)
+	   	    			.append("isCancelled", false)
+	   	    			.append("isFinished", false);
 	   		   MongoCommands.insertData("Confirmation", "Parking", document);
 	   		   schedule(context,uniqueKey);
 	   		   return "SUCCESS";
@@ -73,7 +77,7 @@ public class ConfirmationService {
 	   			}
 	   			else 
 	   			{
-	   		
+	   				System.out.print(context.getState());
 	   				Bson filter,document;
 					filter = eq("parkingName",context.getParkingLotName());
 	   				if(context.getVehicleType() == 1)
@@ -96,11 +100,21 @@ public class ConfirmationService {
 			   	    			.append("userMobileNumber", context.getUserMobileNumber())
 			   	    			.append("state", context.getState())
 			   		   			.append("isConfirmed", context.getIsConfirmed())
-			   	    			.append("vehicleType", context.getVehicleType());
+			   	    			.append("vehicleType", context.getVehicleType())
+			   	    			.append("isParked", false)
+			   	    			.append("isCancelled", false)
+			   	    			.append("isFinished", false);
 			   		   MongoCommands.insertData("Confirmation", "Parking", documentNew);
+			   		Timer time = new Timer();
+					Date dateExpiry=new Date();
+					dateExpiry.setTime(context.getRequestedTime()+ 900000);
+					ExpiryCheck ec = new ExpiryCheck(uniqueKey);
+					time.schedule(ec, dateExpiry);
 	   			}
-	   		
-	   		
+	   			
+	   			
+				
+
  	   	//System.out.println("TIMER EXECUTED");
  	   	return "SUCCESS";
 	   }
@@ -117,12 +131,17 @@ public class ConfirmationService {
 			FindIterable<Document> docs= MongoCommands.retrieveDataWithCondition("Confirmation", "Parking", criteria);
 		   return docs; 
 	   }
+	   
+	   
+	   
+	   
 	   public static void schedule(ConfirmationContext context,String uniqueKey){
 			Timer time = new Timer();
 			CustomTask ct=new CustomTask(context,uniqueKey);
-			Date date=new Date();
-			date.setTime(context.getRequestedTime() - 900000);
-			System.out.print(date.toLocaleString());
-			time.schedule(ct, date);
+			Date dateConfirm=new Date();
+			dateConfirm.setTime(context.getRequestedTime() - 900000);
+			time.schedule(ct, dateConfirm);
+
+		
 		}
 }
