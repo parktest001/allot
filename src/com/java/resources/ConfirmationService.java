@@ -37,7 +37,7 @@ public class ConfirmationService {
 	   	   	String uniqueKey  = String.valueOf(context.getUserMobileNumber()) + String.valueOf(currentTime)+context.getParkingLotName();
 	   		   Document document = new Document("sessionKey",String.valueOf(context.getUserMobileNumber()) + String.valueOf(currentTime) )
 	   	    			.append("parkingLotName", context.getParkingLotName())
-	   	    			.append("requestedTime", context.getRequestedTime())
+	   	    			.append("requestedTime", context.getRequestedTime() )
 	   	    			.append("tTime", context.gettTime())
 	   	    			.append("uniqueKey", uniqueKey)
 	   	    			.append("userMobileNumber", context.getUserMobileNumber())
@@ -94,7 +94,7 @@ public class ConfirmationService {
 					MongoCommands.updateData("ParkingLotDetails", "Parking", document, filter);
 			   		   Document documentNew = new Document("sessionKey",String.valueOf(context.getUserMobileNumber()) + String.valueOf(currentTime) )
 			   	    			.append("parkingLotName", context.getParkingLotName())
-			   	    			.append("requestedTime", context.getRequestedTime())
+			   	    			.append("requestedTime", context.getRequestedTime() + 900000)
 			   	    			.append("tTime", context.gettTime())
 			   	    			.append("uniqueKey", uniqueKey)
 			   	    			.append("userMobileNumber", context.getUserMobileNumber())
@@ -144,4 +144,32 @@ public class ConfirmationService {
 
 		
 		}
+	   @POST
+	   @Path("/setVerifyAlreadyBooked")
+	   @Produces(MediaType.APPLICATION_JSON)
+	   @Consumes({MediaType.APPLICATION_JSON})
+	   public static String verifyBooked(MobileContext context)
+	   {
+	   		BasicDBObject inQuery = new BasicDBObject();
+	   		inQuery.put("userMobileNumber", new BasicDBObject("$eq", context.getUserMobileNumber()));
+	   		inQuery.put("state", new BasicDBObject("$eq", true));
+	   		inQuery.put("isCancelled", new BasicDBObject("$eq", false));
+	   		inQuery.put("isFinished", new BasicDBObject("$eq", false));
+
+			FindIterable<Document> docs= MongoCommands.retrieveDataWithCondition("Confirmation", "Parking", inQuery);
+			if(docs.first() == null)
+			{
+				BasicDBObject inQueryNew = new BasicDBObject();
+				inQueryNew.put("state", new BasicDBObject("$eq", false));
+				inQueryNew.put("isCancelled", new BasicDBObject("$eq", false));
+				inQueryNew.put("isFinished", new BasicDBObject("$eq", false));
+				FindIterable<Document> docsNew= MongoCommands.retrieveDataWithCondition("Confirmation", "Parking", inQueryNew);
+				if(docsNew.first() == null)
+				{
+					return "SUCCESS";
+				}
+				return "FAILED";
+			}
+			return "FAILED";
+	   }
 }

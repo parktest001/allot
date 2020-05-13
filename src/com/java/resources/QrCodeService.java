@@ -24,15 +24,15 @@ public class QrCodeService {
 
 	@POST
 	   @Path("/getQr") 
-	   @Produces(MediaType.TEXT_PLAIN) 
+	   @Produces(MediaType.APPLICATION_JSON) 
 	   @Consumes({MediaType.APPLICATION_JSON})
-	   public static String getQrStringUser(MobileContext context)
+	   public static Document getQrStringUser(MobileContext context)
 	   {
 			BasicDBObject inQuery = new BasicDBObject();	
 			inQuery.put("userMobileNumber", new BasicDBObject("$eq", context.getUserMobileNumber()));
 			inQuery.put("state", new BasicDBObject("$eq", true));
 			FindIterable<Document> docs= MongoCommands.retrieveDataWithCondition("Confirmation", "Parking", inQuery);
-		    return docs.first().getString("uniqueKey"); 
+		    return docs.first();
 	   }
 
 		@POST
@@ -54,7 +54,12 @@ public class QrCodeService {
  					filter = eq("uniqueKey",context.getUniqueKey());
  					document = set("isParked",true);
  					MongoCommands.updateData("Confirmation", "Parking", document, filter);
-		   			return "PARKED";
+ 					System.out.println("HELLOOOOOOOOOOOOOOO Karthikaaaaa loosuuuiiu");
+ 					Bson filter1,document1;
+ 					filter1 = eq("uniqueKey",context.getUniqueKey());
+ 					document1 = set("requestedTime",System.currentTimeMillis());
+ 					MongoCommands.updateData("Confirmation", "Parking", document1, filter1);		   		
+ 					return "PARKED";
 		   		}
 		   		else if(doc.first().getBoolean("state") == true && doc.first().getBoolean("isParked") == true &&  doc.first().getBoolean("isFinished")== false)
 		   		{
@@ -100,5 +105,19 @@ public class QrCodeService {
 		   		return "SUCCESS";
 	       
 	    }
+		@POST
+		   @Path("/finishParking") 
+		   @Produces(MediaType.APPLICATION_JSON) 
+		   @Consumes({MediaType.APPLICATION_JSON})
+		   public static Document getParkingDetails(ConfirmationContext context)
+		   {
+				BasicDBObject inQuery = new BasicDBObject();	
+				inQuery.put("uniqueKey", new BasicDBObject("$eq", context.getUniqueKey()));
+				FindIterable<Document> docs = MongoCommands.retrieveDataWithCondition("Confirmation", "Parking", inQuery);
+			    return docs.first();
+		   }
+	   
+		
+		   
 	   }
 
