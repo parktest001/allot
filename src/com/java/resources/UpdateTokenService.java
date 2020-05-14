@@ -41,13 +41,14 @@ public class UpdateTokenService {
 		BasicDBObject queryGetMobile = new BasicDBObject();
 		queryGetMobile.put("uniqueKey", new BasicDBObject("$eq", context.getUniqueKey()));
 		FindIterable<Document> doc = MongoCommands.retrieveDataWithCondition("Confirmation", "Parking", queryGetMobile);
-
+		if(context.getParkingLotName().equals(doc.first().getString("parkingLotName")))
+		{
+			BasicDBObject queryGetToken = new BasicDBObject();
+			queryGetToken.put("mobile", new BasicDBObject("$eq", doc.first().getLong("userMobileNumber")));
+			FindIterable<Document> docToken = MongoCommands.retrieveDataWithCondition("Token", "UserDetails", queryGetToken);
+			return docToken.first().getString("token");
+		}
+		return "FAILED";
 		
-		
-		
-		BasicDBObject queryGetToken = new BasicDBObject();
-		queryGetToken.put("mobile", new BasicDBObject("$eq", doc.first().getLong("userMobileNumber")));
-		FindIterable<Document> docToken = MongoCommands.retrieveDataWithCondition("Token", "UserDetails", queryGetToken);
-		return docToken.first().getString("token");
 	}
 }

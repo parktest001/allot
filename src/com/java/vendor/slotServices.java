@@ -9,6 +9,7 @@ import javax.ws.rs.core.MediaType;
 import org.bson.Document;
 
 import com.java.context.ParkingLocationDetailsContext;
+import com.java.context.SlotsContext;
 import com.java.database.MongoCommands;
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.FindIterable;
@@ -30,12 +31,14 @@ public class slotServices {
 		   @Path("/getAllocatedFreeSlots")
 		   @Produces(MediaType.APPLICATION_JSON)
 		   @Consumes({MediaType.APPLICATION_JSON})
-		   public static FindIterable<Document> getAllocatedFreeSlotInParking(ParkingLocationDetailsContext context)
+		   public static FindIterable<Document> getAllocatedFreeSlotInParking(SlotsContext context)
 		   {
+			System.out.println(context.getVehicleType());
 		   		BasicDBObject queryCount = new BasicDBObject();
 			   	queryCount.put("parkingLotName", new BasicDBObject("$eq", context.getParkingName()));
 			   	queryCount.put("state", new BasicDBObject("$eq", true));
 			   	queryCount.put("isParked", new BasicDBObject("$eq", true));
+			   	queryCount.put("vehicleType", new BasicDBObject("$eq", context.getVehicleType()));
 				FindIterable<Document> doc = MongoCommands.retrieveDataWithCondition("Confirmation", "Parking", queryCount);
 				return doc;
 		   }
