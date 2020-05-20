@@ -32,6 +32,7 @@ public class UpdateTokenService {
 				MongoCommands.updateData("Token", "UserDetails", document, filter);
 		return "SUCCESS";
 	}
+	
 	@POST
 	@Path("/getToken")
 	@Produces(MediaType.TEXT_PLAIN)

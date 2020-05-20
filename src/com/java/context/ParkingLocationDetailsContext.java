@@ -10,23 +10,32 @@ public class ParkingLocationDetailsContext implements Serializable{
 	   private String parkingName;
 	   private String address;
 	   private float rating = -1;
-	   private long price;
-	   private int liveCarCount;
-	   private int liveBikeCount;
-	   
-
+	   private long bikePrice;
+	   private long carPrice;
+	   private long liveCarCount;
+	   private long liveBikeCount;
+	   private double lattitude;
+	   private double longitude;
+	   private long carCapacity;
+	   private long bikeCapacity;
 	    
-	   public ParkingLocationDetailsContext(String parkingLotId, String parkingName,String address,float rating,long price,int liveCarCount,int liveBikeCount){  
-	      this.parkingLotId = parkingLotId; 
-	      this.parkingName = parkingName; 
-	      this.address = address;
-	      this.rating = rating;
-	      this.price = price;
-	      this.liveCarCount = liveCarCount;
-	      this.liveBikeCount = liveBikeCount;
-
-	   }  
-	   public ParkingLocationDetailsContext() {}
+	   
+	   public ParkingLocationDetailsContext(String parkingLotId, String parkingName, String address, float rating,
+			long bikePrice, long carPrice, long liveCarCount, long liveBikeCount,double lattitude,double longitude,long carCapacity,long bikeCapacity) {
+		this.parkingLotId = parkingLotId;
+		this.parkingName = parkingName;
+		this.address = address;
+		this.rating = rating;
+		this.bikePrice = bikePrice;
+		this.carPrice = carPrice;
+		this.liveCarCount = liveCarCount;
+		this.liveBikeCount = liveBikeCount;
+		this.lattitude = lattitude;
+		this.longitude = longitude;
+		this.carCapacity = carCapacity;
+		this.bikeCapacity = bikeCapacity;
+	}
+	public ParkingLocationDetailsContext() {}
 	   public String getParkingLotId() { 
 	      return parkingLotId; 
 	   } 
@@ -54,27 +63,61 @@ public class ParkingLocationDetailsContext implements Serializable{
 	   @JsonSetter 
 		public void setRating(float rating) { 
 			   this.rating = rating; 
-		}  
-	   public long getPrice() { 
-		      return price; 
-		   } 
-	   @JsonSetter 
-		public void setPrice(long price) { 
-			   this.price = price; 
 		}   
-	   public int getLiveCarCount() {
+	   public long getLiveCarCount() {
 		   	return liveCarCount;
 		   }
 		   @JsonSetter
-		   public void setLiveCarCount(int liveCarCount) {
+		   public void setLiveCarCount(long liveCarCount) {
 		   	this.liveCarCount = liveCarCount;
 		   }
 
-		   public int getLiveBikeCount() {
+		   public long getLiveBikeCount() {
 		   	return liveBikeCount;
 		   }
 		   @JsonSetter
-		   public void setLiveBikeCount(int liveBikeCount) {
+		   public void setLiveBikeCount(long liveBikeCount) {
 		   	this.liveBikeCount = liveBikeCount;
 		   }
+		public long getBikePrice() {
+			return bikePrice;
+		}
+		@JsonSetter
+		public void setBikePrice(long bikePrice) {
+			this.bikePrice = bikePrice;
+		}
+		public long getCarPrice() {
+			return carPrice;
+		}
+		@JsonSetter
+		public void setCarPrice(long carPrice) {
+			this.carPrice = carPrice;
+		}
+		public double getLattitude() {
+			return lattitude;
+		}
+		public void setLattitude(double lattitude) {
+			this.lattitude = lattitude;
+		}
+		public double getLongitude() {
+			return longitude;
+		}
+		public void setLongitude(double longitude) {
+			this.longitude = longitude;
+		}
+		public long getCarCapacity() { 
+		      return carCapacity; 
+		   } 
+		   @JsonSetter
+		   public void setCarCapacity(long carCapacity) { 
+		      this.carCapacity = carCapacity; 
+		   }
+		   public long getBikeCapacity() { 
+		      return bikeCapacity; 
+		   } 
+		   @JsonSetter
+		   public void setBikeCapacity(long bikeCapacity) { 
+		      this.bikeCapacity = bikeCapacity; 
+		   }
+		   
 }

@@ -27,7 +27,7 @@ import com.mongodb.client.FindIterable;
 public class ConfirmationService {
 	
    
-	 @POST
+	 	@POST
 	   @Path("/setConfirmationParkLater")
 	   @Produces(MediaType.TEXT_PLAIN)
 	   @Consumes({MediaType.APPLICATION_JSON})
@@ -45,13 +45,14 @@ public class ConfirmationService {
 	   		   			.append("isConfirmed", context.getIsConfirmed())
 	   	    			.append("vehicleType", context.getVehicleType())
 	   	    			.append("isParked", false)
+	   	    			.append("isPaid", false)
 	   	    			.append("isCancelled", false)
 	   	    			.append("isFinished", false);
 	   		   MongoCommands.insertData("Confirmation", "Parking", document);
 	   		   schedule(context,uniqueKey);
 	   		   return "SUCCESS";
 	   }
-	 @POST
+	 	@POST
 	   @Path("/setConfirmationParkNow")
 	   @Produces(MediaType.TEXT_PLAIN)
 	   @Consumes({MediaType.APPLICATION_JSON})
@@ -64,13 +65,13 @@ public class ConfirmationService {
 	   			queryCount.put("parkingName", new BasicDBObject("$eq", context.getParkingLotName()));
 		   		FindIterable<Document> docCount = MongoCommands.retrieveDataWithCondition("ParkingLotDetails", "Parking", queryCount);
 		   		//System.out.println(docCount.first().getInteger("liveCarCount"));
-	   			if(context.getVehicleType() == 1 && docCount.first().getLong("liveCarCount") <= 0)
+	   			if(context.getVehicleType() == 1 && (docCount.first().get("liveCarCount") instanceof Integer ? docCount.first().getInteger("liveCarCount"): docCount.first().getLong("liveCarCount")) <= 0)
 	   			{
 	   				System.out.println("No car slot available");
 	   				return "FAILED";
 	   			}
 	   			
-	   			else if(context.getVehicleType() == 2 && docCount.first().getLong("liveBikeCount") <= 0)
+	   			else if(context.getVehicleType() == 2 && (docCount.first().get("liveBikeCount") instanceof Integer ? docCount.first().getInteger("liveBikeCount"): docCount.first().getLong("liveBikeCount")) <= 0)
 	   			{
 	   				System.out.println("No Bike slot available");
 	   				return "FAILED";
@@ -83,12 +84,12 @@ public class ConfirmationService {
 	   				if(context.getVehicleType() == 1)
 	   				{
 		   				System.out.println("Car booking confirmed");
-	   					document = set("liveCarCount",docCount.first().getLong("liveCarCount") - 1);
+	   					document = set("liveCarCount",(docCount.first().get("liveCarCount") instanceof Integer ? docCount.first().getInteger("liveCarCount"): docCount.first().getLong("liveCarCount")) - 1);
 
 	   				}
 	   				else
 	   				{
-	   					document = set("liveBikeCount",docCount.first().getLong("liveBikeCount") - 1);
+	   					document = set("liveBikeCount",(docCount.first().get("liveBikeCount") instanceof Integer ? docCount.first().getInteger("liveBikeCount"): docCount.first().getLong("liveBikeCount")) - 1);
 		   				System.out.println("Bike booking confirmed");
 	   				}
 					MongoCommands.updateData("ParkingLotDetails", "Parking", document, filter);
@@ -103,6 +104,7 @@ public class ConfirmationService {
 			   	    			.append("vehicleType", context.getVehicleType())
 			   	    			.append("isParked", false)
 			   	    			.append("isCancelled", false)
+			   	    			.append("isPaid", false)
 			   	    			.append("isFinished", false);
 			   		   MongoCommands.insertData("Confirmation", "Parking", documentNew);
 			   		Timer time = new Timer();
@@ -154,8 +156,10 @@ public class ConfirmationService {
 	   		inQuery.put("userMobileNumber", new BasicDBObject("$eq", context.getUserMobileNumber()));
 	   		inQuery.put("state", new BasicDBObject("$eq", true));
 	   		inQuery.put("isCancelled", new BasicDBObject("$eq", false));
-	   		inQuery.put("isFinished", new BasicDBObject("$eq", false));
-
+	   		inQuery.put("isFinished", new BasicDBObject("$eq", false));	
+	   		inQuery.put("isConfirmed", new BasicDBObject("$eq", true));	
+	   		
+	   		
 			FindIterable<Document> docs= MongoCommands.retrieveDataWithCondition("Confirmation", "Parking", inQuery);
 			if(docs.first() == null)
 			{
@@ -163,6 +167,7 @@ public class ConfirmationService {
 				inQueryNew.put("state", new BasicDBObject("$eq", false));
 				inQueryNew.put("isCancelled", new BasicDBObject("$eq", false));
 				inQueryNew.put("isFinished", new BasicDBObject("$eq", false));
+				inQueryNew.put("isConfirmed", new BasicDBObject("$eq", false));
 				FindIterable<Document> docsNew= MongoCommands.retrieveDataWithCondition("Confirmation", "Parking", inQueryNew);
 				if(docsNew.first() == null)
 				{

@@ -54,7 +54,6 @@ public class QrCodeService {
  					filter = eq("uniqueKey",context.getUniqueKey());
  					document = set("isParked",true);
  					MongoCommands.updateData("Confirmation", "Parking", document, filter);
- 					System.out.println("HELLOOOOOOOOOOOOOOO Karthikaaaaa loosuuuiiu");
  					Bson filter1,document1;
  					filter1 = eq("uniqueKey",context.getUniqueKey());
  					document1 = set("requestedTime",System.currentTimeMillis());
@@ -89,8 +88,16 @@ public class QrCodeService {
  					long finishTime = System.currentTimeMillis();
  					documentState = set("finishTime",finishTime);
  					MongoCommands.updateData("Confirmation", "Parking", documentState, filter);
+ 					long totalPrice;
+ 					if(doc.first().getInteger("vehicleType") == 1) {
+ 						totalPrice = (long) ((docPrice.first().get("carPrice") instanceof Integer ? docPrice.first().getInteger("carPrice"): docPrice.first().getLong("carPrice")) * Math.ceil((double)((long)(finishTime - (long)docStart.first().getLong("requestedTime")) / 3600000.0f)));
 
- 					long totalPrice = (long) (docPrice.first().getLong("price") * Math.ceil((double)((long)(finishTime - (long)docStart.first().getLong("requestedTime")) / 3600000.0f)));
+ 					}
+ 					else  {
+ 	 					totalPrice = (long) ((docPrice.first().get("bikePrice") instanceof Integer ? docPrice.first().getInteger("bikePrice"): docPrice.first().getLong("bikePrice")) * Math.ceil((double)((long)(finishTime - (long)docStart.first().getLong("requestedTime")) / 3600000.0f)));
+
+ 					}
+
  					
  					documentState = set("price",totalPrice);
  					
@@ -117,7 +124,18 @@ public class QrCodeService {
 			    return docs.first();
 		   }
 	   
-		
+		@POST
+		   @Path("/isParked") 
+		   @Produces(MediaType.APPLICATION_JSON) 
+		   @Consumes({MediaType.APPLICATION_JSON})
+		   public static Document getIsParked(ConfirmationContext context)
+		   {
+				BasicDBObject inQuery = new BasicDBObject();	
+				inQuery.put("uniqueKey", new BasicDBObject("$eq", context.getUniqueKey()));
+				FindIterable<Document> docs = MongoCommands.retrieveDataWithCondition("Confirmation", "Parking", inQuery);
+			    return docs.first();
+		   }
+	   
 		   
 	   }
 

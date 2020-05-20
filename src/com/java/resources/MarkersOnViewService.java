@@ -29,13 +29,10 @@ public class MarkersOnViewService {
 	   @Path("/getMarkers")
 	   @Produces(MediaType.APPLICATION_JSON) 
 	   @Consumes({MediaType.APPLICATION_JSON})
-	   public static ArrayList<HashMap<String, Object>> getMarkersOnView(ViewPortContext context)
+	   public static FindIterable<Document> getMarkersOnView(ViewPortContext context)
 	   {
-			ArrayList<String> parkingName= new ArrayList<>();
 			ArrayList<DBObject> criteria = new ArrayList<DBObject>();
 			ArrayList<DBObject> criteria1 = new ArrayList<DBObject>();
-			BasicDBObject inQuery = new BasicDBObject();
-	        ArrayList<HashMap<String,Object>> ja = new ArrayList<>(); 
 	        Double latitude=context.getLattitude();
 	        Double longitude=context.getLongitude();
 			criteria.add(new BasicDBObject("lattitude", new BasicDBObject("$gt", latitude - 0.04)));
@@ -63,54 +60,7 @@ public class MarkersOnViewService {
 					criteria.add(new BasicDBObject("bikeCapacity", new BasicDBObject("$gt", 0)));
 				}
 			}
-			FindIterable<Document> docs= MongoCommands.retrieveDataWithCondition("ParkingLotDetailSignUp", "Parking", new BasicDBObject("$and", criteria));
-			
-			docs.forEach(new Block<Document>() {
-
-				@Override
-				public void apply(Document t) {
-					parkingName.add(t.getString("parkingLotName"));	
-				};
-			
-			});
-			inQuery.put("parkingName", new BasicDBObject("$in", parkingName));
-			criteria1.add(inQuery);
-			FindIterable<Document> docsSpace= MongoCommands.retrieveDataWithCondition("ParkingLotDetails", "Parking",  new BasicDBObject("$and", criteria1));
-
-			docs.forEach(new Block<Document>() {
-
-				@Override
-				public void apply(Document t) {
-
-					docsSpace.forEach(new Block<Document>() {
-
-						@Override
-						public void apply(Document u) {
-							if(t.getString("parkingLotName").equals(u.getString("parkingName")))
-							{
-								try {
-							        HashMap<String,Object> jo = new HashMap<>(); 
-							        jo.put("parkingName",t.getString("parkingLotName"));
-							        jo.put("address", u.getString("address"));
-							        jo.put("rating", u.get("rating"));
-							        jo.put("price", u.get("price"));
-							        jo.put("lattitude", t.get("lattitude"));
-							        jo.put("longitude", t.get("longitude"));
-							        jo.put("carCapacity", t.get("carCapacity"));
-							        jo.put("bikeCapacity", t.get("bikeCapacity"));
-							        ja.add(jo);
-
-								}catch (Exception e) {
-									System.out.println(e);
-								}
-							}
-						};
-
-					});				
-					};
-
-			});
-			return ja; 
-	
+			FindIterable<Document> docs= MongoCommands.retrieveDataWithCondition("ParkingLotDetails", "Parking", new BasicDBObject("$and", criteria));
+			return docs;
 	   }
 }

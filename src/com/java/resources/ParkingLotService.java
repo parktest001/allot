@@ -1,5 +1,8 @@
 package com.java.resources;
 
+import static com.mongodb.client.model.Filters.eq;
+import static com.mongodb.client.model.Updates.set;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Base64;
@@ -13,9 +16,11 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import org.bson.Document;
+import org.bson.conversions.Bson;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
+import com.java.context.ConfirmationContext;
 import com.java.context.IdContext;
 import com.java.context.MessageInput;
 import com.java.context.ParkingLocationDetailsContext;
@@ -46,7 +51,8 @@ public class ParkingLotService {
 	    			.append("parkingName", context.getParkingName())
 	    			.append("address", context.getAddress())
 	    			.append("rating", context.getRating())
-	    			.append("price", context.getPrice())
+	    			.append("bikePrice", context.getBikePrice())
+	    			.append("carPrice", context.getCarPrice())
 	    			.append("liveCarCount", context.getLiveCarCount())
 	    			.append("liveBikeCount", context.getLiveBikeCount());
 		   
@@ -77,13 +83,14 @@ public class ParkingLotService {
 				   .append("carCapacity", context.getCarCapacity())
 				   .append("bikeCapacity", context.getBikeCapacity())
 				   .append("features", context.getFeatures())
-				   .append("price", context.getPrice());
+				   .append("bikePrice", context.getBikePrice())
+				   .append("carPrice", context.getCarPrice());
 
 		   MongoCommands.insertData("ParkingLotDetailSignUp", "Parking", document);
 		   String parkingIdGenerated = Base64.getEncoder() 
 	              .encodeToString(context.getParkingLotName().getBytes()); 
 		   //(long parkingLotId, String parkingName,String address,float rating,long price,long liveCarCount,long liveBikeCount)
-		   ParkingLocationDetailsContext parkingLocationDetailsContext=new ParkingLocationDetailsContext(parkingIdGenerated,context.getParkingLotName(),context.getAddress(),3,context.getPrice(),context.getCarCapacity(),context.getBikeCapacity());
+		   ParkingLocationDetailsContext parkingLocationDetailsContext=new ParkingLocationDetailsContext(parkingIdGenerated,context.getParkingLotName(),context.getAddress(),3,context.getBikePrice(),context.getCarPrice(),context.getCarCapacity(),context.getBikeCapacity(),context.getLattitude(),context.getLongitude(),context.getCarCapacity(),context.getBikeCapacity());
 		   setParkingLotDetail(parkingLocationDetailsContext);		   
 		   return "SUCCESS"; 
 	   }
@@ -106,5 +113,17 @@ public class ParkingLotService {
 		return docs;
 		   
 	   }
+	   
+	   @POST
+	   @Path("/updateSlot")
+	   @Produces(MediaType.TEXT_PLAIN)
+	   @Consumes({MediaType.APPLICATION_JSON})
+	   public String updateSlot(ConfirmationContext context){
+		   Bson filter,document;
+		   filter = eq("uniqueKey",context.getUniqueKey());
+		   document = set("slot",context.getSlot());
+		   MongoCommands.updateData("Confirmation", "Parking", document, filter);
+		return "SUCCESS";
+	   } 
 
 }

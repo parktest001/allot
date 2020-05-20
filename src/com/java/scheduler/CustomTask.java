@@ -36,12 +36,12 @@ public class CustomTask extends TimerTask  {
 		   			queryCount.put("parkingName", new BasicDBObject("$eq", context.getParkingLotName()));
 			   		FindIterable<Document> docCount = MongoCommands.retrieveDataWithCondition("ParkingLotDetails", "Parking", queryCount);
 
-		   			if(context.getVehicleType() == 1 && docCount.first().getLong("liveCarCount") <= 0)
+		   			if(context.getVehicleType() == 1 && (docCount.first().get("liveCarCount") instanceof Integer ? docCount.first().getInteger("liveCarCount"): docCount.first().getLong("liveCarCount"))<= 0)
 		   			{
 		   				System.out.println("No car slot available");
 		   			}
 		   			
-		   			else if(context.getVehicleType() == 2 && docCount.first().getLong("liveBikeCount") <= 0)
+		   			else if(context.getVehicleType() == 2 && (docCount.first().get("liveBikeCount") instanceof Integer ? docCount.first().getInteger("liveBikeCount"): docCount.first().getLong("liveBikeCount")) <= 0)
 		   			{
 		   				System.out.println("No Bike slot available");
 		   			}
@@ -54,12 +54,12 @@ public class CustomTask extends TimerTask  {
 		   				if(context.getVehicleType() == 1)
 		   				{
 			   				System.out.println("Car booking confirmed");
-		   					document = set("liveCarCount",docCount.first().getLong("liveCarCount") - 1);
+		   					document = set("liveCarCount",(docCount.first().get("liveCarCount") instanceof Integer ? docCount.first().getInteger("liveCarCount"): docCount.first().getLong("liveCarCount")) - 1);
 
 		   				}
 		   				else
 		   				{
-		   					document = set("liveBikeCount",docCount.first().getLong("liveBikeCount") - 1);
+		   					document = set("liveBikeCount",(docCount.first().get("liveBikeCount") instanceof Integer ? docCount.first().getInteger("liveBikeCount"): docCount.first().getLong("liveBikeCount")) - 1);
 			   				System.out.println("Bike booking confirmed");
 		   				}
 	   					MongoCommands.updateData("ParkingLotDetails", "Parking", document, filter);

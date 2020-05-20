@@ -20,38 +20,39 @@ public class ConfirmationContext implements Serializable{
 	   private int vehicleType;
 	   private long price;
 	   private long finishTime;
-
-	   public ConfirmationContext(String sessionKey, String parkingLotName, long requestedTime, long tTime,String uniqueKey, long userMobileNumber, boolean state,boolean isConfirmed,int vehicleType,boolean isParked,boolean isFinished,long price,long finishTime,boolean isCancelled){  
-	      this.sessionKey = sessionKey;
-	      this.parkingLotName = parkingLotName;
-	      this.requestedTime = requestedTime;
-	      this.tTime = tTime;
-	      this.uniqueKey = uniqueKey;
-	      this.userMobileNumber = userMobileNumber;
-	      this.state = state;
-	      this.isConfirmed = isConfirmed;
-	      this.vehicleType = vehicleType;
-	      this.isParked =isParked;
-	      this.isFinished = isFinished;
-	      this.price = price;
-	      this.finishTime = finishTime;
-	      this.isCancelled = isCancelled;
-
-	   }  
-	   public boolean getIsCancelled() {
+	   private String slot;
+	   private boolean isPaid;
+	   
+	     
+	   
+	public ConfirmationContext(String sessionKey, String parkingLotName, long requestedTime, long tTime,
+			String uniqueKey, long userMobileNumber, boolean state, boolean isConfirmed, boolean isParked,
+			boolean isFinished, boolean isCancelled, int vehicleType, long price, long finishTime, String slot,boolean isPaid) {
+		this.sessionKey = sessionKey;
+		this.parkingLotName = parkingLotName;
+		this.requestedTime = requestedTime;
+		this.tTime = tTime;
+		this.uniqueKey = uniqueKey;
+		this.userMobileNumber = userMobileNumber;
+		this.state = state;
+		this.isConfirmed = isConfirmed;
+		this.isParked = isParked;
+		this.isFinished = isFinished;
+		this.isCancelled = isCancelled;
+		this.vehicleType = vehicleType;
+		this.price = price;
+		this.finishTime = finishTime;
+		this.slot = slot;
+		this.isPaid = isPaid;
+	}
+	public boolean getIsCancelled() {
 		return isCancelled;
 	}
 	   @JsonSetter
 	public void setIsCancelled(boolean isCancelled) {
 		this.isCancelled = isCancelled;
 	}
-	public long getPrice() {
-		return price;
-	}
-	   @JsonSetter
-	public void setPrice(long price) {
-		this.price = price;
-	}
+	
 	public long getFinishTime() {
 		return finishTime;
 	}
@@ -130,15 +131,39 @@ public class ConfirmationContext implements Serializable{
 	public boolean getIsConfirmed() {
 		return isConfirmed;
 	}
+	@JsonSetter
 	public void setIsConfirmed(boolean isConfirmed) {
 		this.isConfirmed = isConfirmed;
 	}
 	public int getVehicleType() {
 		return vehicleType;
 	}
+	@JsonSetter
 	public void setVehicleType(int vehicleType) {
 		this.vehicleType = vehicleType;
 	}
+
+	public String getSlot() {
+		return slot;
+	}
+	@JsonSetter
+	public void setSlot(String slot) {
+		this.slot = slot;
+	}
+	public long getPrice() {
+		return price;
+	}
+	@JsonSetter
+	public void setPrice(long price) {
+		this.price = price;
+	}
+	public boolean getIsPaid() {
+		return isPaid;
+	}
+	public void setIsPaid(boolean isPaid) {
+		this.isPaid = isPaid;
+	}
+	
 	
 }
 

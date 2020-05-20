@@ -12,22 +12,26 @@ public class signUpContext implements Serializable{
 	   private String address;
 	   private double lattitude;
 	   private double longitude;
-	   private int carCapacity;
-	   private int bikeCapacity;
+	   private long carCapacity;
+	   private long bikeCapacity;
 	   private List<String> features;
-	   private long price;
+	   private long bikePrice;
+	   private long carPrice;
 	    
-	   public signUpContext(String parkingLotName, String address,double lattitude, double longitude, int carCapacity, int bikeCapacity, List<String> features,long price){  
-	      this.parkingLotName = parkingLotName;
-	      this.address = address;
-	      this.lattitude = lattitude;
-	      this.longitude = longitude;
-	      this.carCapacity = carCapacity;
-	      this.bikeCapacity = bikeCapacity;
-	      this.features = features;
-	      this.price = price;
-	   }  
-	   public signUpContext() {}
+	    
+	   public signUpContext(String parkingLotName, String address, double lattitude, double longitude, long carCapacity,
+			long bikeCapacity, List<String> features, long bikePrice, long carPrice) {
+		this.parkingLotName = parkingLotName;
+		this.address = address;
+		this.lattitude = lattitude;
+		this.longitude = longitude;
+		this.carCapacity = carCapacity;
+		this.bikeCapacity = bikeCapacity;
+		this.features = features;
+		this.bikePrice = bikePrice;
+		this.carPrice = carPrice;
+	}
+	public signUpContext() {}
 	   public String getParkingLotName() { 
 	      return parkingLotName; 
 	   } 
@@ -56,18 +60,18 @@ public class signUpContext implements Serializable{
 	   public void setLongitude(double longitude) { 
 	      this.longitude = longitude; 
 	   }
-	   public int getCarCapacity() { 
+	   public long getCarCapacity() { 
 	      return carCapacity; 
 	   } 
 	   @JsonSetter
-	   public void setCarCapacity(int carCapacity) { 
+	   public void setCarCapacity(long carCapacity) { 
 	      this.carCapacity = carCapacity; 
 	   }
-	   public int getBikeCapacity() { 
+	   public long getBikeCapacity() { 
 	      return bikeCapacity; 
 	   } 
 	   @JsonSetter
-	   public void setBikeCapacity(int bikeCapacity) { 
+	   public void setBikeCapacity(long bikeCapacity) { 
 	      this.bikeCapacity = bikeCapacity; 
 	   }
 
@@ -78,13 +82,21 @@ public class signUpContext implements Serializable{
 	   public void setFeatures(List<String> features) {
 	   		this.features = features;
 	   }
-	   @JsonSetter 
-		public void setRating(long price) { 
-			   this.price = price; 
-		}  
-	   public long getPrice() { 
-		      return price; 
-		   } 
+	public long getBikePrice() {
+		return bikePrice;
+	}
+	@JsonSetter
+	public void setBikePrice(long bikePrice) {
+		this.bikePrice = bikePrice;
+	}
+	public long getCarPrice() {
+		return carPrice;
+	}
+	@JsonSetter
+	public void setCarPrice(long carPrice) {
+		this.carPrice = carPrice;
+	}
+	   
 	   
 }		
 
