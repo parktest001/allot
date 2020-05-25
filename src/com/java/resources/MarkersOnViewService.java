@@ -32,7 +32,6 @@ public class MarkersOnViewService {
 	   public static FindIterable<Document> getMarkersOnView(ViewPortContext context)
 	   {
 			ArrayList<DBObject> criteria = new ArrayList<DBObject>();
-			ArrayList<DBObject> criteria1 = new ArrayList<DBObject>();
 	        Double latitude=context.getLattitude();
 	        Double longitude=context.getLongitude();
 			criteria.add(new BasicDBObject("lattitude", new BasicDBObject("$gt", latitude - 0.04)));
@@ -42,11 +41,11 @@ public class MarkersOnViewService {
 			if(context.getParkingOption() == true) {
 			if(context.getVehicle() == 1 )
 			{
-				criteria1.add(new BasicDBObject("liveCarCount", new BasicDBObject("$gt", 0)));
+				criteria.add(new BasicDBObject("liveCarCount", new BasicDBObject("$gt", 0)));
 			}
 			else if(context.getVehicle() == 2)
 			{
-				criteria1.add(new BasicDBObject("liveBikeCount", new BasicDBObject("$gt", 0)));
+				criteria.add(new BasicDBObject("liveBikeCount", new BasicDBObject("$gt", 0)));
 			}
 			}
 			else
