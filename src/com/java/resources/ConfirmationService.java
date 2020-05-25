@@ -152,6 +152,13 @@ public class ConfirmationService {
 	   @Consumes({MediaType.APPLICATION_JSON})
 	   public static String verifyBooked(MobileContext context)
 	   {
+		   BasicDBObject inQueryPaid = new BasicDBObject();
+		   inQueryPaid.put("userMobileNumber", new BasicDBObject("$eq", context.getUserMobileNumber()));
+		   inQueryPaid.put("isPaid", new BasicDBObject("$eq", false));
+		   inQueryPaid.put("isFinished", new BasicDBObject("$eq", true));	
+			FindIterable<Document> docsPaid= MongoCommands.retrieveDataWithCondition("Confirmation", "Parking", inQueryPaid);
+			if(docsPaid.first() == null)
+			{
 	   		BasicDBObject inQuery = new BasicDBObject();
 	   		inQuery.put("userMobileNumber", new BasicDBObject("$eq", context.getUserMobileNumber()));
 	   		inQuery.put("state", new BasicDBObject("$eq", true));
@@ -175,6 +182,8 @@ public class ConfirmationService {
 				}
 				return "FAILED";
 			}
+			}
+			
 			return "FAILED";
 	   }
 }

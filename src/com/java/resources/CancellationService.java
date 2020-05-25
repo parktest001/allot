@@ -53,12 +53,25 @@ public class CancellationService {
 				filter = eq("parkingName",doc.first().getString("parkingLotName"));
 		   		if(doc.first().getInteger("vehicleType") == 1)
 		   		{
-		   			document = set("liveCarCount",docCount.first().getLong("liveCarCount") + 1);
+		   			document = set("liveCarCount",(docCount.first().get("liveCarCount") instanceof Integer ? docCount.first().getInteger("liveCarCount"): docCount.first().getLong("liveCarCount")) + 1);
 				}
 	  			else
 				{
-		   			document = set("liveBikeCount",docCount.first().getLong("liveBikeCount") + 1);
+		   			document = set("liveBikeCount",(docCount.first().get("liveBikeCount") instanceof Integer ? docCount.first().getInteger("liveBikeCount"): docCount.first().getLong("liveBikeCount")) + 1);
 		   		}
 				MongoCommands.updateData("ParkingLotDetails", "Parking", document, filter);
+		   }
+		   
+		   @POST
+		   @Path("/cancelPrebookedService")
+		   @Produces(MediaType.TEXT_PLAIN)
+		   @Consumes({MediaType.APPLICATION_JSON})
+		   public static String setPrebookedCancellationService(ConfirmationContext context){
+		   	Bson filter, document;
+		   	filter = eq("uniqueKey", context.getUniqueKey());
+		   
+		   	document = set("isCancelled",true);
+		   	MongoCommands.updateData("Confirmation","Parking",document, filter);
+		    return "SUCCESS";
 		   }
 }

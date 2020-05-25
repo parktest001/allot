@@ -27,7 +27,8 @@ public class PaymentService {
 			filter = eq("uniqueKey",context.getUniqueKey());
 			document = set("isPaid",true);
 			MongoCommands.updateData("Confirmation", "Parking", document, filter);
-		   
+			document = set("state",false);
+			MongoCommands.updateData("Confirmation", "Parking", document, filter);
 		   
 		   return "SUCCESS";
 	   }

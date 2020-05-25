@@ -57,6 +57,10 @@ public class ParkingLotService {
 	    			.append("liveBikeCount", context.getLiveBikeCount());
 		   
 		   MongoCommands.insertData("ParkingLotDetails", "Parking", document);
+		   Document documentToken = new Document("parkingLotName", context.getParkingName())
+				   .append("token", "");
+		
+		   MongoCommands.insertData("Token", "VendorDetails", documentToken);
 		   return "SUCCESS"; 
 	   }
 

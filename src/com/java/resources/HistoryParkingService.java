@@ -52,10 +52,8 @@ public class HistoryParkingService {
 
 						@Override
 						public void apply(Document u) {
-							System.out.println(u);
 							if(t.getString("parkingName").equals( u.getString("parkingLotName")))
 							{
-								System.out.println("vvvvvvvvvvvvvvvvv");
 								HashMap<String,Object> result = new HashMap<>();
 								if(!u.getBoolean("isConfirmed")&& !u.getBoolean("isParked") && !u.getBoolean("isFinished") && !u.getBoolean("isCancelled") && !u.getBoolean("state"))
 								{
@@ -63,6 +61,7 @@ public class HistoryParkingService {
 									result.put("requestedTime", u.getLong("requestedTime"));
 									result.put("address", t.getString("address"));
 									result.put("onGoing", false);
+									result.put("uniqueKey", u.getString("uniqueKey"));
 									res.add(result);
 								}
 								else if(u.getBoolean("state")){
@@ -70,6 +69,10 @@ public class HistoryParkingService {
 									result.put("requestedTime", u.getLong("requestedTime"));
 									result.put("address", t.getString("address"));
 									result.put("onGoing", true);
+									result.put("isPaid", u.getBoolean("isPaid"));
+									result.put("isFinished", u.getBoolean("isFinished"));
+									result.put("isParked", u.getBoolean("isParked"));
+									result.put("uniqueKey", u.getString("uniqueKey"));
 									res.add(result);
 								}
 //								result.put("parkingLotName", value);
@@ -117,10 +120,8 @@ public class HistoryParkingService {
 
 						@Override
 						public void apply(Document t) {
-							System.out.println(u);
 							if(t.getString("parkingName").equals( u.getString("parkingLotName")))
 							{
-								System.out.println("vvvvvvvvvvvvvvvvv");
 								HashMap<String,Object> result = new HashMap<>();
 								if(u.getBoolean("isFinished") && !u.getBoolean("state"))
 								{

@@ -70,9 +70,9 @@ public class QrCodeService {
  					MongoCommands.updateData("Confirmation", "Parking", documentParked, filter);
  					documentFinished = set("isFinished",true);
  					MongoCommands.updateData("Confirmation", "Parking", documentFinished, filter);
- 					documentState = set("state",false);
- 					MongoCommands.updateData("Confirmation", "Parking", documentState, filter);
- 					
+// 					documentState = set("state",false);
+// 					MongoCommands.updateData("Confirmation", "Parking", documentState, filter);
+ 					System.out.println("HELLLLLLLLLLOOOOOOOOOO");
  					BasicDBObject queryName = new BasicDBObject();
  					queryName.put("uniqueKey", new BasicDBObject("$eq",context.getUniqueKey()));
  					FindIterable<Document> docName = MongoCommands.retrieveDataWithCondition("Confirmation", "Parking", queryName);
