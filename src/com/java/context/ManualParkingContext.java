@@ -11,12 +11,13 @@ public class ManualParkingContext implements Serializable{
 	private String parkingLotName;
 	private long finishTime;
 	private int vehicleType;
+	private String uniqueKey;
 	
 	
 	
 	
 	public ManualParkingContext(String slot, String vehicleNumber, long requestedTime, boolean state,
-			String parkingLotName, long finishTime, int vehicleType) {
+			String parkingLotName, long finishTime, int vehicleType,String uniqueKey) {
 		this.slot = slot;
 		this.vehicleNumber = vehicleNumber;
 		this.requestedTime = requestedTime;
@@ -24,6 +25,21 @@ public class ManualParkingContext implements Serializable{
 		this.parkingLotName = parkingLotName;
 		this.finishTime = finishTime;
 		this.vehicleType = vehicleType;
+		this.uniqueKey = uniqueKey;
+	}
+
+
+
+
+	public String getUniqueKey() {
+		return uniqueKey;
+	}
+
+
+
+
+	public void setUniqueKey(String uniqueKey) {
+		this.uniqueKey = uniqueKey;
 	}
 
 

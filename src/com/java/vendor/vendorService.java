@@ -41,7 +41,7 @@ public class vendorService {
 	public static HashMap<String,Object> vendorLogin(VendorLoginContext context){
 		HashMap<String,Object> res = new HashMap<>();
 		BasicDBObject query = new BasicDBObject();
-		query.put("userId", new BasicDBObject("$eq", context.getUserId()));
+		query.put("userName", new BasicDBObject("$eq", context.getUserName()));
 		FindIterable<Document> doc = MongoCommands.retrieveDataWithCondition("ParkingLotDetailSignUp", "Parking", query);
 		if(doc.first() == null) {
 			res.put("status", "NoUserID");

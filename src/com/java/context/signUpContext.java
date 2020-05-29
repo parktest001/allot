@@ -17,10 +17,11 @@ public class signUpContext implements Serializable{
 	   private List<String> features;
 	   private long bikePrice;
 	   private long carPrice;
-	    
+	   private String userName;
+	   private String passWord;
 	    
 	   public signUpContext(String parkingLotName, String address, double lattitude, double longitude, long carCapacity,
-			long bikeCapacity, List<String> features, long bikePrice, long carPrice) {
+			long bikeCapacity, List<String> features, long bikePrice, long carPrice,String userName,String passWord) {
 		this.parkingLotName = parkingLotName;
 		this.address = address;
 		this.lattitude = lattitude;
@@ -30,6 +31,20 @@ public class signUpContext implements Serializable{
 		this.features = features;
 		this.bikePrice = bikePrice;
 		this.carPrice = carPrice;
+		this.userName = userName;
+		this.passWord = passWord;
+	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	public String getPassWord() {
+		return passWord;
+	}
+	public void setPassWord(String passWord) {
+		this.passWord = passWord;
 	}
 	public signUpContext() {}
 	   public String getParkingLotName() { 

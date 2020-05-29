@@ -8,6 +8,7 @@ import javax.ws.rs.core.MediaType;
 
 import org.bson.Document;
 
+import com.java.context.ManualParkingContext;
 import com.java.context.ParkingLocationDetailsContext;
 import com.java.context.SlotsContext;
 import com.java.database.MongoCommands;
@@ -40,6 +41,20 @@ public class slotServices {
 			   	queryCount.put("isParked", new BasicDBObject("$eq", true));
 			   	queryCount.put("vehicleType", new BasicDBObject("$eq", context.getVehicleType()));
 				FindIterable<Document> doc = MongoCommands.retrieveDataWithCondition("Confirmation", "Parking", queryCount);
+				return doc;
+		   }
+		@POST
+		   @Path("/getManualAllocatedFreeSlots")
+		   @Produces(MediaType.APPLICATION_JSON)
+		   @Consumes({MediaType.APPLICATION_JSON})
+		   public static FindIterable<Document> getManualAllocatedFreeSlotInParking(ManualParkingContext context)
+		   {
+			System.out.println(context.getVehicleType());
+		   		BasicDBObject queryCount = new BasicDBObject();
+			   	queryCount.put("parkingLotName", new BasicDBObject("$eq", context.getParkingLotName()));
+			   	queryCount.put("state", new BasicDBObject("$eq", true));
+			   	queryCount.put("vehicleType", new BasicDBObject("$eq", context.getVehicleType()));
+				FindIterable<Document> doc = MongoCommands.retrieveDataWithCondition("ManualParking", "Parking", queryCount);
 				return doc;
 		   }
 }

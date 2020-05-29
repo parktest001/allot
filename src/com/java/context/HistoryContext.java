@@ -9,12 +9,14 @@ public class HistoryContext implements Serializable{
 	   
 	   private long userMobileNumber;
 	   private boolean isActive;
+	   int pageNumber;
 	   
 
-	   public HistoryContext(long userMobileNumber,boolean isActive){  
+	   public HistoryContext(long userMobileNumber,boolean isActive,int pageNumber){  
 	    
 	      this.userMobileNumber = userMobileNumber;
 	      this.isActive = isActive;
+	      this.pageNumber = pageNumber;
 
 	   }  
 	   public boolean getIsActive() {
@@ -32,4 +34,10 @@ public class HistoryContext implements Serializable{
 	   public void setUserMobileNumber(long userMobileNumber) { 
 	      this.userMobileNumber = userMobileNumber;
 	   }
+	public int getPageNumber() {
+		return pageNumber;
+	}
+	public void setPageNumber(int pageNumber) {
+		this.pageNumber = pageNumber;
+	}
 }

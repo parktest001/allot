@@ -88,7 +88,9 @@ public class ParkingLotService {
 				   .append("bikeCapacity", context.getBikeCapacity())
 				   .append("features", context.getFeatures())
 				   .append("bikePrice", context.getBikePrice())
-				   .append("carPrice", context.getCarPrice());
+				   .append("carPrice", context.getCarPrice())
+				   .append("userName", context.getUserName())
+		   		   .append("passWord", context.getPassWord());
 
 		   MongoCommands.insertData("ParkingLotDetailSignUp", "Parking", document);
 		   String parkingIdGenerated = Base64.getEncoder() 

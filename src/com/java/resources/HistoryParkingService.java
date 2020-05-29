@@ -100,7 +100,7 @@ public class HistoryParkingService {
 			BasicDBObject inQueryAddressJoin = new BasicDBObject();	
 			inQuery.put("userMobileNumber", new BasicDBObject("$eq", context.getUserMobileNumber()));
 			
-			FindIterable<Document> docs= MongoCommands.retrieveDataWithCondition("Confirmation", "Parking", inQuery);
+			FindIterable<Document> docs= MongoCommands.retrieveDataWithCondition("Confirmation", "Parking", inQuery).skip(context.getPageNumber() * 5).limit(5).sort(new BasicDBObject("requestedTime",-1));
 			docs.forEach(new Block<Document>() {
 
 				@Override
@@ -110,16 +110,14 @@ public class HistoryParkingService {
 			});
 			inQueryAddressJoin.put("parkingName",new BasicDBObject("$in",parkingName));
 			FindIterable<Document> docsAddress= MongoCommands.retrieveDataWithCondition("ParkingLotDetails", "Parking", inQueryAddressJoin);
-			docs.forEach(new Block<Document>() {
+			docsAddress.forEach(new Block<Document>() {
 
 				@SuppressWarnings("deprecation")
 				@Override
-				public void apply(Document u) {
-					System.out.println(u);
-					docsAddress.forEach(new Block<Document>() {
-
+				public void apply(Document t) {
+					docs.forEach(new Block<Document>() {
 						@Override
-						public void apply(Document t) {
+						public void apply(Document u) {
 							if(t.getString("parkingName").equals( u.getString("parkingLotName")))
 							{
 								HashMap<String,Object> result = new HashMap<>();
@@ -131,15 +129,16 @@ public class HistoryParkingService {
 									result.put("isCancelled",false);
 									result.put("price",u.getLong("price"));
 									result.put("finishTime",u.getLong("finishTime"));
-									res.add(0,result);
+									res.add(result);
 								}
 								else if(!u.getBoolean("state") && u.getBoolean("isCancelled")){
 									result.put("parkingLotName", u.getString("parkingLotName"));
 									result.put("requestedTime", u.getLong("requestedTime"));
 									result.put("address", t.getString("address"));
 									result.put("isCancelled", true);
-									res.add(0,result);
+									res.add(result);
 								}
+								System.out.println(result);
 //								result.put("parkingLotName", value);
 //								result.put("parkingLotName", value);
 							}
