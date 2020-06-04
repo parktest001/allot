@@ -8,6 +8,7 @@ public class ParkingLocationDetailsContext implements Serializable{
 	private static final long serialVersionUID = 1L; 
 	   private String parkingLotId; 
 	   private String parkingName;
+	   private String displayName;
 	   private String address;
 	   private float rating = -1;
 	   private long bikePrice;
@@ -20,10 +21,11 @@ public class ParkingLocationDetailsContext implements Serializable{
 	   private long bikeCapacity;
 	    
 	   
-	   public ParkingLocationDetailsContext(String parkingLotId, String parkingName, String address, float rating,
+	   public ParkingLocationDetailsContext(String parkingLotId, String parkingName,String displayName, String address, float rating,
 			long bikePrice, long carPrice, long liveCarCount, long liveBikeCount,double lattitude,double longitude,long carCapacity,long bikeCapacity) {
 		this.parkingLotId = parkingLotId;
 		this.parkingName = parkingName;
+		this.displayName = displayName;
 		this.address = address;
 		this.rating = rating;
 		this.bikePrice = bikePrice;
@@ -50,6 +52,13 @@ public class ParkingLocationDetailsContext implements Serializable{
 	   public void setParkingName(String parkingName) { 
 	      this.parkingName = parkingName; 
 	   }  
+	   public String getDisplayName() { 
+		      return displayName; 
+		   } 
+		   @JsonSetter 
+		   public void setDisplayName(String displayName) { 
+		      this.displayName = displayName; 
+		   }  
 	   public String getAddress() { 
 		      return address; 
 		   } 

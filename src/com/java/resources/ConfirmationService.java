@@ -63,6 +63,7 @@ public class ConfirmationService {
 	   		
 	   			BasicDBObject queryCount = new BasicDBObject();
 	   			queryCount.put("parkingName", new BasicDBObject("$eq", context.getParkingLotName()));
+	   			System.out.println(context.getParkingLotName());
 		   		FindIterable<Document> docCount = MongoCommands.retrieveDataWithCondition("ParkingLotDetails", "Parking", queryCount);
 		   		//System.out.println(docCount.first().getInteger("liveCarCount"));
 	   			if(context.getVehicleType() == 1 && (docCount.first().get("liveCarCount") instanceof Integer ? docCount.first().getInteger("liveCarCount"): docCount.first().getLong("liveCarCount")) <= 0)

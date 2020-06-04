@@ -47,7 +47,7 @@ public class LogInService {
 		
 		
 		BasicDBObject query = new BasicDBObject();
-		query.put("userName", new BasicDBObject("$eq", context.getUserName()));
+		query.put("mobile", new BasicDBObject("$eq", context.getMobile()));
 		FindIterable<Document> doc = MongoCommands.retrieveDataWithCondition("User", "UserDetails", query);
 		if(doc.first() == null) {
 			return "NoUser";

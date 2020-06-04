@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 public class signUpContext implements Serializable{
 	private static final long serialVersionUID = 1L; 
 	   private String parkingLotName;
+	   private String displayName;
 	   private String address;
 	   private double lattitude;
 	   private double longitude;
@@ -20,7 +21,7 @@ public class signUpContext implements Serializable{
 	   private String userName;
 	   private String passWord;
 	    
-	   public signUpContext(String parkingLotName, String address, double lattitude, double longitude, long carCapacity,
+	   public signUpContext(String parkingLotName, String displayName, String address, double lattitude, double longitude, long carCapacity,
 			long bikeCapacity, List<String> features, long bikePrice, long carPrice,String userName,String passWord) {
 		this.parkingLotName = parkingLotName;
 		this.address = address;
@@ -33,6 +34,7 @@ public class signUpContext implements Serializable{
 		this.carPrice = carPrice;
 		this.userName = userName;
 		this.passWord = passWord;
+		this.displayName = displayName;
 	}
 	public String getUserName() {
 		return userName;
@@ -50,6 +52,13 @@ public class signUpContext implements Serializable{
 	   public String getParkingLotName() { 
 	      return parkingLotName; 
 	   } 
+	   public String getDisplayName() { 
+		      return displayName; 
+		   } 
+		   @JsonSetter 
+		   public void setDisplayName(String displayName) { 
+		      this.displayName = displayName; 
+		   }  
 	   @JsonSetter
 	   public void setAddress(String address) { 
 	      this.address = address; 

@@ -47,8 +47,11 @@ public class ParkingLotService {
 	   @Consumes({MediaType.APPLICATION_JSON})
 	   public static String setParkingLotDetail(ParkingLocationDetailsContext context)
 	   {
+		   String parkingNameUnique = Base64.getEncoder() 
+		              .encodeToString((context.getParkingName()+context.getLattitude()+context.getLongitude()).getBytes());
 		   Document document = new Document("parkingLotId",context.getParkingLotId())
-	    			.append("parkingName", context.getParkingName())
+	    			.append("parkingName", parkingNameUnique)
+	    			.append("displayName", context.getDisplayName())
 	    			.append("address", context.getAddress())
 	    			.append("rating", context.getRating())
 	    			.append("bikePrice", context.getBikePrice())
@@ -84,7 +87,10 @@ public class ParkingLotService {
 	   @Consumes({MediaType.APPLICATION_JSON})
 	   public static String setParkingLotDetailSignUp(signUpContext context)
 	   {
-		   Document document = new Document("parkingLotName", context.getParkingLotName())
+		   String parkingNameUnique = Base64.getEncoder() 
+		              .encodeToString((context.getDisplayName()+context.getLattitude()+context.getLongitude()).getBytes());
+		   Document document = new Document("parkingLotName", parkingNameUnique)
+				   .append("displayName", context.getDisplayName())
 				   .append("address", context.getAddress())
 				   .append("lattitude", context.getLattitude())
 				   .append("longitude", context.getLongitude())
@@ -100,7 +106,7 @@ public class ParkingLotService {
 		   String parkingIdGenerated = Base64.getEncoder() 
 	              .encodeToString(context.getParkingLotName().getBytes()); 
 		   //(long parkingLotId, String parkingName,String address,float rating,long price,long liveCarCount,long liveBikeCount)
-		   ParkingLocationDetailsContext parkingLocationDetailsContext=new ParkingLocationDetailsContext(parkingIdGenerated,context.getParkingLotName(),context.getAddress(),3,context.getBikePrice(),context.getCarPrice(),context.getCarCapacity(),context.getBikeCapacity(),context.getLattitude(),context.getLongitude(),context.getCarCapacity(),context.getBikeCapacity());
+		   ParkingLocationDetailsContext parkingLocationDetailsContext=new ParkingLocationDetailsContext(parkingIdGenerated,parkingNameUnique,context.getParkingLotName(),context.getAddress(),3,context.getBikePrice(),context.getCarPrice(),context.getCarCapacity(),context.getBikeCapacity(),context.getLattitude(),context.getLongitude(),context.getCarCapacity(),context.getBikeCapacity());
 		   setParkingLotDetail(parkingLocationDetailsContext);		   
 		   return "SUCCESS"; 
 	   }

@@ -61,6 +61,7 @@ public class HistoryParkingService {
 									result.put("requestedTime", u.getLong("requestedTime"));
 									result.put("address", t.getString("address"));
 									result.put("onGoing", false);
+									result.put("displayName", t.getString("displayName"));
 									result.put("uniqueKey", u.getString("uniqueKey"));
 									res.add(result);
 								}
@@ -72,6 +73,7 @@ public class HistoryParkingService {
 									result.put("isPaid", u.getBoolean("isPaid"));
 									result.put("isFinished", u.getBoolean("isFinished"));
 									result.put("isParked", u.getBoolean("isParked"));
+									result.put("displayName", t.getString("displayName"));
 									result.put("uniqueKey", u.getString("uniqueKey"));
 									res.add(result);
 								}
@@ -83,6 +85,8 @@ public class HistoryParkingService {
 					}
 				
 			});
+			System.out.println("DAJAOFDJNALDJFOAJDFAJDFOIJAFDJ");
+			System.out.println(res);
 			return res;
 	   }
 	
@@ -128,12 +132,14 @@ public class HistoryParkingService {
 									result.put("address", t.getString("address"));
 									result.put("isCancelled",false);
 									result.put("price",u.getLong("price"));
+									result.put("displayName", t.getString("displayName"));
 									result.put("finishTime",u.getLong("finishTime"));
 									res.add(result);
 								}
 								else if(!u.getBoolean("state") && u.getBoolean("isCancelled")){
 									result.put("parkingLotName", u.getString("parkingLotName"));
 									result.put("requestedTime", u.getLong("requestedTime"));
+									result.put("displayName", t.getString("displayName"));
 									result.put("address", t.getString("address"));
 									result.put("isCancelled", true);
 									res.add(result);

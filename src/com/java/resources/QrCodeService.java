@@ -16,7 +16,8 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.client.FindIterable;
 import org.bson.Document;
 import org.bson.conversions.Bson;
-import java.lang.Math; 
+import java.lang.Math;
+import java.util.HashMap; 
 
 @Path("/QrService") 
 public class QrCodeService {
@@ -118,10 +119,18 @@ public class QrCodeService {
 		   @Consumes({MediaType.APPLICATION_JSON})
 		   public static Document getParkingDetails(ConfirmationContext context)
 		   {
+				Document response = new Document();
 				BasicDBObject inQuery = new BasicDBObject();	
 				inQuery.put("uniqueKey", new BasicDBObject("$eq", context.getUniqueKey()));
 				FindIterable<Document> docs = MongoCommands.retrieveDataWithCondition("Confirmation", "Parking", inQuery);
-			    return docs.first();
+				BasicDBObject inQueryName = new BasicDBObject();	
+				inQueryName.put("parkingName", new BasicDBObject("$eq", docs.first().getString("parkingLotName")));
+				FindIterable<Document> docsName = MongoCommands.retrieveDataWithCondition("ParkingLotDetails", "Parking", inQueryName);
+				response.append("displayName", docsName.first().getString("displayName"))
+						.append("requestedTime", docs.first().getLong("requestedTime"))
+						.append("finishTime", docs.first().getLong("finishTime"))
+						.append("price", docs.first().getLong("price"));
+			    return response;
 		   }
 	   
 		@POST

@@ -9,7 +9,7 @@ import javax.ws.rs.core.MediaType;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 
-
+import com.java.context.ParkingLocationDetailsContext;
 import com.java.context.VendorLoginContext;
 import com.java.database.MongoCommands;
 import com.mongodb.BasicDBObject;
@@ -50,10 +50,25 @@ public class vendorService {
 		else if(doc.first().get("passWord").equals(context.getpassWord()))
 		{
 			res.put("status", "SUCCESS");
+			BasicDBObject queryName = new BasicDBObject();
+			queryName.put("parkingName", new BasicDBObject("$eq", doc.first().getString("parkingLotName")));
+			FindIterable<Document> docName = MongoCommands.retrieveDataWithCondition("ParkingLotDetails", "Parking", queryName);
 			res.put("parkingLotName", doc.first().getString("parkingLotName"));
 			return res;
 		}
 		res.put("status", "FAILED");
+		return res;
+	}
+	@POST
+	@Path("/getDisplayName")
+	@Produces(MediaType.APPLICATION_JSON) 
+	@Consumes({MediaType.APPLICATION_JSON})
+	public static HashMap<String,Object> getDisplayName(ParkingLocationDetailsContext context){
+		HashMap<String,Object> res = new HashMap<>();
+		BasicDBObject query = new BasicDBObject();
+		query.put("parkingName", new BasicDBObject("$eq", context.getParkingName()));
+		FindIterable<Document> doc = MongoCommands.retrieveDataWithCondition("ParkingLotDetails", "Parking", query);
+		res.put("displayName", doc.first().getString("displayName"));
 		return res;
 	}
 	

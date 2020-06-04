@@ -7,21 +7,21 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 public class UserLogInContext implements Serializable{
 
 	private static final long serialVersionUID = 1L; 
-	   private String userName ;
+	   private long mobile ;
 	   private String passWord ; 
 	    
-	   public UserLogInContext(String userName,String passWord){  
-		   this.userName=userName;
+	   public UserLogInContext(long mobile,String passWord){  
+		   this.mobile=mobile;
 		   this.passWord=passWord;
 	   }  
 	   public UserLogInContext() {}
 	
-	   public String getUserName() { 
-	      return userName; 
+	   public long getMobile() { 
+	      return mobile; 
 	   } 
 	   @JsonSetter
-	   public void setUserName(String userName) { 
-	      this.userName = userName; 
+	   public void setMobile(long mobile) { 
+	      this.mobile = mobile; 
 	   } 
 	   public String getpassWord() { 
 		      return passWord; 
