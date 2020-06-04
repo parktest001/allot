@@ -16,13 +16,5 @@
    <servlet-mapping> 
       <servlet-name>Jersey RESTful Application</servlet-name> 
       <url-pattern>/rest/*</url-pattern> 
-   </servlet-mapping>  
-    <filter>
-    <filter-name>AuthenticationFilter</filter-name>
-    <filter-class>com.javapapers.webservices.rest.jersey.RestAuthenticationFilter</filter-class>
-  </filter>
-  <filter-mapping>
-    <filter-name>AuthenticationFilter</filter-name>
-    <url-pattern>/rest/*</url-pattern>
-  </filter-mapping> 
+   </servlet-mapping>   
 </web-app>
