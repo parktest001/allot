@@ -1,16 +1,18 @@
 package com.java.context;
 
 import java.io.Serializable;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonSetter;
 
 public class ImageContext implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private String parkingName;
-	private String imageBase64;
+	private List<String> url;
 	public ImageContext() {}
-	public ImageContext(String parkingName) {
+	public ImageContext(String parkingName,List<String> url) {
 		this.parkingName = parkingName;
+		this.url = url;
 	}
 	public String getParkingName() {
 		return parkingName;
@@ -19,12 +21,12 @@ public class ImageContext implements Serializable{
 	public void setParkingName(String parkingName) {
 		this.parkingName = parkingName;
 	}
-	public String getImageBase64() {
-		return imageBase64;
+	public List<String> getUrl() {
+		return url;
 	}
 	@JsonSetter
-	public void setImageBase64(String imageBase64) {
-		this.imageBase64 = imageBase64;
+	public void setUrl(List<String> url) {
+		this.url = url;
 	}
 
 }

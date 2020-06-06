@@ -20,9 +20,6 @@ import org.bson.conversions.Bson;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
-import com.java.context.ConfirmationContext;
-import com.java.context.IdContext;
-import com.java.context.MessageInput;
 import com.java.context.ParkingLocationDetailsContext;
 import com.java.context.signUpContext;
 import com.java.database.MongoCommands;
@@ -32,14 +29,7 @@ import com.mongodb.client.FindIterable;
 @Path("/ParkingService") 
 public class ParkingLotService {
 	 Message userDao = new Message();  
-	   @POST
-	   @Path("/getSpace")
-	   @Produces(MediaType.APPLICATION_JSON) 
-	   @Consumes({MediaType.APPLICATION_JSON})
-	   public FindIterable<Document> getMessages(List<IdContext> context){ 
-	      return getParkingLotDetail(context); 
-	   }   
-	   
+	
 	   
 	   @POST
 	   @Path("/setSpace")
@@ -73,13 +63,6 @@ public class ParkingLotService {
 
 
 
-	   @POST
-	   @Path("/getSpaceSignup")
-	   @Produces(MediaType.APPLICATION_JSON)
-	   @Consumes({MediaType.APPLICATION_JSON})
-	   public FindIterable<Document> getParkingLotDetailsSignUp(){ 
-	      return getParkingLotDetailSignUp(); 
-	   } 
 	   
 	   @POST
 	   @Path("/setSpaceSignup") 
@@ -111,35 +94,6 @@ public class ParkingLotService {
 		   return "SUCCESS"; 
 	   }
 	   
-	   public static FindIterable<Document> getParkingLotDetail(List<IdContext> context)
-	   {
-			List<Integer> list = new ArrayList<Integer>(); 
-		   	for(IdContext idobj:context)
-		   	{
-		   		list.add((int) idobj.getId());
-		   	}
-			BasicDBObject inQuery = new BasicDBObject();	
-			inQuery.put("parkingLotId", new BasicDBObject("$in", list));
-			FindIterable<Document> docs= MongoCommands.retrieveDataWithCondition("ParkingLotDetails", "Parking", inQuery);
-		    return docs; 
-	   }
-	   public static FindIterable<Document> getParkingLotDetailSignUp()
-	   {
-		FindIterable<Document> docs= MongoCommands.retrieveAllData("ParkingLotDetails", "Parking");
-		return docs;
-		   
-	   }
-	   
-	   @POST
-	   @Path("/updateSlot")
-	   @Produces(MediaType.TEXT_PLAIN)
-	   @Consumes({MediaType.APPLICATION_JSON})
-	   public String updateSlot(ConfirmationContext context){
-		   Bson filter,document;
-		   filter = eq("uniqueKey",context.getUniqueKey());
-		   document = set("slot",context.getSlot());
-		   MongoCommands.updateData("Confirmation", "Parking", document, filter);
-		return "SUCCESS";
-	   } 
+	
 
 }
