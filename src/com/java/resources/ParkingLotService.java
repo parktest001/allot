@@ -28,7 +28,6 @@ import com.mongodb.client.FindIterable;
 
 @Path("/ParkingService") 
 public class ParkingLotService {
-	 Message userDao = new Message();  
 	
 	   
 	   @POST
