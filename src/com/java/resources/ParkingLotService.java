@@ -36,8 +36,7 @@ public class ParkingLotService {
 	   @Consumes({MediaType.APPLICATION_JSON})
 	   public static String setParkingLotDetail(ParkingLocationDetailsContext context)
 	   {
-		   String parkingNameUnique = Base64.getEncoder() 
-		              .encodeToString((context.getParkingName()+context.getLattitude()+context.getLongitude()).getBytes());
+		   String parkingNameUnique = context.getParkingName();
 		   Document document = new Document("parkingLotId",context.getParkingLotId())
 	    			.append("parkingName", parkingNameUnique)
 	    			.append("displayName", context.getDisplayName())
@@ -69,8 +68,7 @@ public class ParkingLotService {
 	   @Consumes({MediaType.APPLICATION_JSON})
 	   public static String setParkingLotDetailSignUp(signUpContext context)
 	   {
-		   String parkingNameUnique = Base64.getEncoder() 
-		              .encodeToString((context.getDisplayName()+context.getLattitude()+context.getLongitude()).getBytes());
+		   String parkingNameUnique = context.getDisplayName()+context.getLattitude()+context.getLongitude();
 		   Document document = new Document("parkingLotName", parkingNameUnique)
 				   .append("displayName", context.getDisplayName())
 				   .append("address", context.getAddress())
