@@ -1,5 +1,6 @@
 package com.java.database;
 
+
 import org.bson.BSON;
 import org.bson.Document;
 import org.bson.conversions.Bson;
@@ -15,29 +16,14 @@ import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 
 public class MongoCommands {
-	public static MongoClientURI uri = new MongoClientURI("mongodb://channel:stream@cluster0-shard-00-00-gbif3.mongodb.net:27017,cluster0-shard-00-01-gbif3.mongodb.net:27017,cluster0-shard-00-02-gbif3.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority");
+	public static MongoClientURI uri = new MongoClientURI("mongodb://admin:Password@cluster0-shard-00-00.rmoje.mongodb.net:27017,cluster0-shard-00-01.rmoje.mongodb.net:27017,cluster0-shard-00-02.rmoje.mongodb.net:27017/<dbname>?ssl=true&replicaSet=atlas-v7op1p-shard-0&authSource=admin&retryWrites=true&w=majority");
 	public static MongoClient mongo = new MongoClient(uri); 
-
-	///static MongoClient mongo = MongoServerConnection.mongo;
-	public static void createCollection(String collectionName,String databaseName)
-	{
-		   
-	     MongoCredential  credential = MongoCredential.createCredential("sampleUser", "myDb", 
-	        "password".toCharArray());
-	     MongoDatabase database = mongo.getDatabase(databaseName); 
-	     System.out.println("Credentials ::"+ credential); 
-	     database.createCollection(collectionName); 
-	}
+	
 	public static void insertData(String collectionName,String databaseName,Document document)
 	{
 		 
 	     MongoDatabase database = mongo.getDatabase(databaseName); 
 		 MongoCollection<Document> collection = database.getCollection(collectionName); 
-//	      Document document = new Document("title", "MongoDB")
-//	    			.append("description", "database")
-//	    			.append("likes", 100)
-//	    			.append("url", "http://www.tutorialspoint.com/mongodb/")
-//	    			.append("by", "tutorials point");
 	  	collection.insertOne(document);
 		
 	}
@@ -46,11 +32,6 @@ public class MongoCommands {
 		 
 	     MongoDatabase database = mongo.getDatabase(databaseName); 
 		 MongoCollection<Document> collection = database.getCollection(collectionName); 
-//	      Document document = new Document("title", "MongoDB")
-//	    			.append("description", "database")
-//	    			.append("likes", 100)
-//	    			.append("url", "http://www.tutorialspoint.com/mongodb/")
-//	    			.append("by", "tutorials point");
 	  	collection.updateOne(query, document);
 		
 	}
@@ -74,5 +55,12 @@ public class MongoCommands {
 		FindIterable<Document> iterDoc = collection.find(query);
 		return iterDoc;
 	}
+	public static void deleteDataWithCondition(String collectionName,String databaseName,BasicDBObject query )
+	{
+		MongoDatabase database = mongo.getDatabase(databaseName);
+		MongoCollection<Document> collection = database.getCollection(collectionName); 
+		collection.findOneAndDelete(query);
+	}
 
 }
+

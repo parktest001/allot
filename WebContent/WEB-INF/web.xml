@@ -12,6 +12,10 @@
          <param-name>jersey.config.server.provider.packages</param-name> 
          <param-value>com.java.resources</param-value> 
       </init-param> 
+      <init-param>
+            <param-name>com.sun.jersey.spi.container.ContainerResponseFilters</param-name>
+            <param-value>com.javapapers.webservices.rest.jersey.CORSFilter</param-value>
+        </init-param>
    </servlet> 
    <servlet-mapping> 
       <servlet-name>Jersey RESTful Application</servlet-name> 
